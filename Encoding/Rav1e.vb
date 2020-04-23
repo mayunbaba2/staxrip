@@ -135,7 +135,58 @@ Public Class Rav1eParams
     Property Mode As New OptionParam With {
         .Text = "Mode",
         .Path = "Basic",
-        .Options = {"Quality"}}
+        .AlwaysOn = True,
+        .Options = {"Speed", "Bitrate"},
+        .Values = {"--speed", "--bitrate"},
+        .InitValue = 0}
+
+    Property Bitrate As New NumParam With {
+        .Text = "Bitrate",
+        .Path = "Basic",
+        .Config = {0, 9999},
+        .ImportAction = Sub(arg As String)
+                            If arg = "" Then Exit Sub
+                            Dim a = arg.Trim(""""c)
+                            Mode.Value = 1 + " " + Bitrate.Value
+                        End Sub,
+        .ArgsFunc = Function() "" & Bitrate.Value,
+    .VisibleFunc = Function() Mode.Value = 1}
+
+    Property Passes As New OptionParam With {
+        .Text = "Passes",
+        .Path = "Basic",
+        .Options = {"One Pass", "Two Passes"},
+        .Values = {"--pass 1", "--pass 2"},
+        .InitValue = 0,
+        .VisibleFunc = Function() Mode.Value = 1}
+
+    Property Range As New OptionParam With {
+        .Text = "Range",
+        .Path = "VUI",
+        .Switch = "--range",
+        .InitValue = 0,
+        .Options = {"Unspecified", "Limited", "Full"}}
+
+    Property Prime As New OptionParam With {
+        .Text = "Primaries",
+        .Path = "VUI",
+        .Switch = "--primaries",
+        .InitValue = 1,
+        .Options = {"BT709", "Unspecified", "BT470M", "BT470BG", "ST170M", "ST240M", "Film", "BT2020", "ST428", "P3DCI", "P3Display", "Tech3213"}}
+
+    Property Matrix As New OptionParam With {
+        .Text = "Matrix",
+        .Path = "VUI",
+        .Switch = "--matrix",
+        .InitValue = 2,
+        .Options = {"Identity", "BT709", "Unspecified", "BT470M", "BT470BG", "ST170M", "ST240M", "YCgCo", "BT2020NonConstantLuminance", "BT2020ConstantLuminance", "ST2085", "ChromaticityDerivedNonConstantLuminance", "ChromaticityDerivedConstantLuminance", "ICtCp"}}
+
+    Property Transfer As New OptionParam With {
+        .Text = "Transfer",
+        .Path = "VUI",
+        .Switch = "--transfer",
+        .InitValue = 1,
+        .Options = {"BT1886", "Unspecified", "BT470M", "BT470BG", "ST170M", "ST240M", "Linear", "Logarithmic100", "Logarithmic316", "XVYCC", "BT1361E", "SRGB", "BT2020Ten", "BT2020Twelve", "PerceptualQuantizer", "ST428", "HybridLogGamma"}}
 
     Property Speed As New NumParam With {
         .Text = "Speed",
@@ -143,7 +194,14 @@ Public Class Rav1eParams
         .Switch = "--speed",
         .Config = {0, 10},
         .Init = 3,
-        .Path = "Basic"}
+        .VisibleFunc = Function() Mode.Value = 0,
+        .ImportAction = Sub(arg As String)
+                            If arg = "" Then Exit Sub
+                            Dim a = arg.Trim(""""c)
+                            Mode.Value = 0 + " " + Speed.Value
+                        End Sub,
+        .ArgsFunc = Function() "" & Speed.Value,
+         .Path = "Basic"}
 
     Property Quantizer As New NumParam With {
         .Text = "Quantizer",
@@ -157,7 +215,40 @@ Public Class Rav1eParams
         .Switch = "--keyint",
         .Path = "Basic",
         .Config = {0, 300},
-        .Init = 30}
+        .Init = 240}
+
+    Property MinKeyint As New NumParam With {
+        .Text = "Min Keyframe",
+        .Switch = "--min-keyint",
+        .Path = "Basic",
+        .Config = {0, 300},
+        .Init = 12}
+
+    Property Light As New NumParam With {
+        .Text = "Content Light",
+        .Switch = "--content_light",
+        .Path = "VUI",
+        .Config = {0, Integer.MaxValue, 50},
+        .ImportAction = Sub(arg As String)
+                            If arg = "" Then Exit Sub
+                            Dim a = arg.Trim(""""c).Split(","c)
+                            Light.Value = a(0).ToInt
+                            MaxFALL.Value = a(1).ToInt
+                        End Sub,
+        .ArgsFunc = Function() If(Light.Value <> 0 OrElse MaxFALL.Value <> 0, "--content_light """ & Light.Value & "," & MaxFALL.Value & """", "")}
+
+    Property MaxFALL As New NumParam With {
+        .Path = "VUI",
+        .Config = {0, Integer.MaxValue, 50},
+        .ArgsFunc = Function() "",
+        .Text = "Maximum FALL"}
+
+    Property Threads As New NumParam With {
+        .Text = "Threads",
+        .Switch = "--threads",
+        .Path = "Basic",
+        .Config = {0, 20},
+        .Init = 0}
 
     Property Custom As New StringParam With {
         .Text = "Custom",
@@ -168,8 +259,10 @@ Public Class Rav1eParams
             If ItemsValue Is Nothing Then
                 ItemsValue = New List(Of CommandLineParam)
 
-                Add(Mode, Tune, Speed, Quantizer, Keyint, Limit,
-                   New BoolParam With {.Switch = "--low_latency", .Text = "Low Latency", .Init = False, .Path = "Basic"},
+                Add(Tune, Passes, Mode, Speed, Bitrate, Quantizer,
+                New StringParam With {.Switch = "--mastering_display", .Path = "VUI", .Text = "Master Display", .Quotes = True},
+                Keyint, MinKeyint, Threads, Limit, Light, MaxFALL, Prime, Matrix, Transfer, Range,
+                   New BoolParam With {.Switch = "--low_latency", .Text = "Low Latency", .Path = "Basic"},
                 Custom)
 
                 For Each item In ItemsValue
@@ -232,4 +325,11 @@ Public Class Rav1eParams
     Public Overrides Function GetPackage() As Package
         Return Package.Rav1e
     End Function
+
 End Class
+
+Public Enum Rav1eRateMode
+    Speed
+    OnePass
+    TwoPass
+End Enum

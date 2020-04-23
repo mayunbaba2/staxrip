@@ -9,7 +9,7 @@ AviSynth+
 
 StaxRip support both AviSynth+ x64 and VapourSynth x64 as scripting based video processing tool.
 
-Used Version: 2728
+Used Version: 2772
 
 http://avisynth.nl/index.php/AviSynth%2B
 
@@ -29,7 +29,7 @@ AVSMeter
 
 AVSMeter runs an Avisynth script with virtually no overhead, displays clip info, CPU and memory usage and the minimum, maximum and average frames processed per second. It measures how fast Avisynth can serve frames to a client application like x264 and comes in handy when testing filters/plugins to evaluate their performance and memory requirements.
 
-Used Version: 2.8.6
+Used Version: 2.9.0
 
 http://forum.doom9.org/showthread.php?t=174797
 
@@ -109,7 +109,7 @@ ffmpeg
 
 Versatile audio video converter.
 
-Used Version: 4.1
+Used Version: 4.1.3
 
 http://ffmpeg.org
 
@@ -119,7 +119,7 @@ FFTW
 
 Library required by the FFT3DFilter AviSynth plugin.
 
-Used Version: 3.3.6
+Used Version: 3.3.8
 
 http://www.fftw.org/
 
@@ -139,7 +139,7 @@ MediaInfo
 
 MediaInfo is used by StaxRip to read infos from media files.
 
-Used Version: 18.05
+Used Version: 19.04
 
 http://mediaarea.net/en/MediaInfo
 
@@ -149,7 +149,7 @@ mkvextract
 
 MKV demuxing tool.
 
-Used Version: 28.2.0.7
+Used Version: 33.0.0
 
 https://mkvtoolnix.download/
 
@@ -159,7 +159,7 @@ mkvinfo
 
 MKV muxing tool.
 
-Used Version: 28.2.0.7
+Used Version: 33.0.0
 
 https://mkvtoolnix.download/
 
@@ -169,7 +169,7 @@ mkvmerge
 
 MKV muxing tool.
 
-Used Version: 28.2.0.7
+Used Version: 33.0.0
 
 https://mkvtoolnix.download/
 
@@ -179,7 +179,7 @@ MP4Box
 
 MP4Box is a MP4 muxing and demuxing command line app.
 
-Used Version: 0.7.2-DEV-rev909
+Used Version: 0.7.2-DEV-rev1009
 
 http://gpac.wp.mines-telecom.fr/
 
@@ -189,9 +189,9 @@ mpvnet
 
 libmpv based media player.
 
-Used Version: 2.0
+Used Version: 4.4
 
-https://github.com/Revan654/mpvnet/
+https://github.com/stax76/mpv.net
 
 
 mtn
@@ -199,7 +199,7 @@ mtn
 
 movie thumbnailer saves thumbnails (screenshots) of movie or video files to jpeg files. StaxRip uses a custom built version with HEVC support added in and also includes the latest FFMPEG.
 
-Used Version: 2.0
+Used Version: 2.0.1
 
 https://github.com/Revan654/Movie-Thumbnailer-mtn
 
@@ -209,7 +209,7 @@ NVEnc
 
 NVIDIA hardware video encoder.
 
-Used Version: 4.23
+Used Version: 4.42
 
 http://github.com/rigaya/NVEnc
 
@@ -229,7 +229,7 @@ Python
 
 Python x64 is required by VapourSynth x64. StaxRip x64 supports both AviSynth+ x64 and VapourSynth x64 as scripting based video processing tool.
 
-Used Version: 3.7.1
+Used Version: 3.7.3
 
 http://www.python.org
 
@@ -249,7 +249,7 @@ QSVEnc
 
 Intel hardware video encoder.
 
-Used Version: 3.11
+Used Version: 3.23
 
 http://github.com/rigaya/QSVEnc
 
@@ -274,16 +274,6 @@ Used Version:
 http://www.nikse.dk/SubtitleEdit
 
 
-Update
-~~~~~~
-
-Python Based Script that Checks and Updates StaxRip, Requires Python 3 + SitePackages
-
-Used Version: 0.2
-
-
-
-
 VapourSynth
 ~~~~~~~~~~~
 
@@ -299,7 +289,7 @@ VCEEnc
 
 AMD hardware video encoder.
 
-Used Version: 3.06
+Used Version: 4.01
 
 http://github.com/rigaya/VCEEnc
 
@@ -359,7 +349,7 @@ x264
 
 H.264 video encoding command line app.
 
-Used Version: 2935
+Used Version: 2969
 
 http://www.videolan.org/developers/x264.html
 
@@ -369,7 +359,7 @@ x265
 
 H.265 video encoding command line app.
 
-Used Version: 2.9+9
+Used Version: 3.1
 
 http://x265.org
 
@@ -491,7 +481,7 @@ Filters: cnr2
 
 Used Version: 2.6.1
 
-http://avisynth.nl/index.php/CNR2
+http://avisynth.nl/index.php/Cnr2
 
 
 DAA3Mod
@@ -623,7 +613,7 @@ Filters: DePan, DePanInterleave, DePanStabilize, DePanScenes
 
 Used Version: 1.13.1
 
-http://avisynth.nl/index.php/Depan
+http://avisynth.nl/index.php/DePan
 
 
 DePanEstimate
@@ -635,7 +625,7 @@ Filters: DePanEstimate
 
 Used Version: 1.13.1
 
-http://avisynth.nl/index.php/Depan
+http://avisynth.nl/index.php/DePan
 
 
 DFTTest
@@ -647,7 +637,7 @@ Filters: dfttest
 
 Used Version: 1.9.4.1
 
-http://avisynth.nl/index.php/DFTTest
+http://avisynth.nl/index.php/Dfttest
 
 
 DGDecodeIM
@@ -777,7 +767,7 @@ AviSynth+ and VapourSynth source filter supporting various input formats.
 
 Filters: FFVideoSource, FFAudioSource
 
-Used Version: 2.30
+Used Version: 2.3.0
 
 http://github.com/FFMS/ffms2
 
@@ -837,7 +827,7 @@ Simple debanding filter that can be quite effective for some anime sources.
 
 Filters: f3kdb
 
-Used Version: r410
+Used Version: 5.0
 
 http://forum.doom9.org/showthread.php?t=161411
 
@@ -861,7 +851,7 @@ Increases the frame rate with interpolation and fine artifact removal
 
 Filters: FrameRateConverter
 
-Used Version: 2017-08-08
+Used Version: 1.2.1
 
 https://github.com/mysteryx93/FrameRateConverter
 
@@ -873,7 +863,7 @@ Increases the frame rate with interpolation and fine artifact removal
 
 Filters: FrameRateConverter
 
-Used Version: 2017-06-22
+Used Version: 1.2.1
 
 https://github.com/mysteryx93/FrameRateConverter
 
@@ -947,7 +937,7 @@ Filters: Jinc36Resize, Jinc64Resize, Jinc144Resize, Jinc256Resize
 
 Used Version: r44
 
-http://avisynth.nl/index.php/Jinc
+http://avisynth.nl/index.php/JincResize
 
 
 JPSDR
@@ -957,7 +947,7 @@ Merge of AutoYUY2, NNEDI3 and ResampleMT
 
 Filters: nnedi3, AutoYUY2, PointResizeMT, BilinearResizeMT, BicubicResizeMT, LanczosResizeMT, Lanczos4ResizeMT, BlackmanResizeMT, Spline16ResizeMT, Spline36ResizeMT, Spline64ResizeMT, GaussResizeMT, SincResizeMT, DeBilinearResizeMT, DeBicubicResizeMT, DeLanczosResizeMT, DeLanczos4ResizeMT, DeBlackmanResizeMT, DeSpline16ResizeMT, DeSpline36ResizeMT, DeSpline64ResizeMT, DeGaussResizeMT, DeSincResizeMT
 
-Used Version: 2.2.0.7
+Used Version: 3.0.0
 
 http://forum.doom9.org/showthread.php?t=174248
 
@@ -1029,7 +1019,7 @@ MaskTools2 contain a set of filters designed to create, manipulate and use masks
 
 Filters: mt_adddiff, mt_average, mt_binarize, mt_circle, mt_clamp, mt_convolution, mt_diamond, mt_edge, mt_ellipse, mt_expand, mt_hysteresis, mt_inflate, mt_inpand, mt_invert, mt_logic, mt_losange, mt_lut, mt_lutf, mt_luts, mt_lutxy, mt_makediff, mt_mappedblur, mt_merge, mt_motion, mt_polish, mt_rectangle, mt_square
 
-Used Version: 2.2.14
+Used Version: 2.2.18
 
 http://github.com/pinterf/masktools
 
@@ -1149,7 +1139,7 @@ MVTools is collection of functions for estimation and compensation of objects mo
 
 Filters: MSuper, MAnalyse, MCompensate, MMask, MDeGrain1, MDeGrain2, MDegrain3
 
-Used Version: 2.7.31.0
+Used Version: 2.7.38
 
 http://github.com/pinterf/mvtools
 
@@ -1214,18 +1204,6 @@ Used Version: 3.361s
 http://avisynth.nl/index.php/QTGMC
 
 
-RawSource
-~~~~~~~~~
-
-Loads raw video data directly from files, RawSourcePlus opens a video file which contains 8bit, 9bit, 10bit, 16bit or float 
-
-Filters: RawSource
-
-Used Version: 2016-08-14
-
-http://avisynth.nl/index.php/VapourSource
-
-
 ResizeX
 ~~~~~~~
 
@@ -1245,7 +1223,7 @@ RgTools is a modern rewrite of RemoveGrain, Repair, BackwardClense, Clense, Forw
 
 Filters: RemoveGrain, Clense, ForwardClense, BackwardClense, Repair, VerticalCleaner
 
-Used Version: 0.96
+Used Version: 0.97
 
 http://github.com/pinterf/RgTools
 
@@ -1271,7 +1249,7 @@ Filters: SuperRes, SuperResXBR, SuperXBR, ResizeShader, SuperResPass, SuperXbrMu
 
 Used Version: 1.6.5
 
-http://avisynth.nl/index.php/Shader
+https://github.com/mysteryx93/AviSynthShader/releases
 
 
 Shader DLL
@@ -1279,11 +1257,11 @@ Shader DLL
 
 
 
-Filters: Shader, ShaderExecute, ConvertToShader, ConvertFromShader
+Filters: SuperRes, SuperResXBR, SuperXBR, ResizeShader, SuperResPass, SuperXbrMulti, ResizeShader
 
-Used Version: 1.6.5
+Used Version: 1.0
 
-http://avisynth.nl/index.php/Shader
+https://github.com/mysteryx93/AviSynthShader/releases
 
 
 SMDegrain
@@ -1485,21 +1463,9 @@ AviSynth subtitle plugin with support for vobsub srt and ass.
 
 Filters: VobSub, TextSubMod
 
-Used Version: 1.1.9.0
+Used Version: 5.2
 
 http://github.com/HomeOfVapourSynthEvolution/VSFilterMod
-
-
-XAA
-~~~
-
-A highly versatile anti-aliasing function.
-
-Filters: XAA
-
-Used Version: 1.2.1
-
-http://avisynth.nl/index.php/xaa
 
 
 xNLMeans
@@ -1669,7 +1635,7 @@ Filters: dgm.DegrainMedian
 
 Used Version: 2016-08-07
 
-https://github.com/HomeOfVapourSynthEvolution/VapourSynth-TTempSmooth
+https://github.com/dubhater/vapoursynth-degrainmedian
 
 
 DFTTest
@@ -1681,7 +1647,19 @@ Filters: dfttest.DFTTest
 
 Used Version: 2017-12-21
 
-https://github.com/Hinterwaeldlers/vapoursynth-hqdn3d
+https://github.com/HomeOfVapourSynthEvolution/VapourSynth-DFTTest
+
+
+DGDecodeNV
+~~~~~~~~~~
+
+DGDecNV is a shareware AviSynth source filter using NVIDIA hardware acceleration. DGIndexNV can be configured at Tools > Setting > Demux. DGDecNV is not included so must be downloaded manually.
+
+Filters: DGSource
+
+Used Version: 2053
+
+http://rationalqm.us/dgdecnv/dgdecnv.html
 
 
 Dither
@@ -1727,7 +1705,7 @@ AviSynth+ and VapourSynth source filter supporting various input formats.
 
 Filters: ffms2
 
-Used Version: 2.30
+Used Version: 2.3.0
 
 http://github.com/FFMS/ffms2
 
@@ -1756,6 +1734,18 @@ Used Version: 2018-06-30
 http://forum.doom9.org/showthread.php?p=1777860#post1777860
 
 
+FixTelecinedFades
+~~~~~~~~~~~~~~~~~
+
+InsaneAA Anti-Aliasing Script.
+
+Filters: ftf.FixFades
+
+Used Version: 5.0
+
+https://github.com/IFeelBloated/Fix-Telecined-Fades
+
+
 flash3kyuu_deband
 ~~~~~~~~~~~~~~~~~
 
@@ -1763,7 +1753,7 @@ Simple debanding filter that can be quite effective for some anime sources.
 
 Filters: core.f3kdb.Deband
 
-Used Version: r410
+Used Version: 5.0
 
 http://forum.doom9.org/showthread.php?t=161411
 
@@ -1787,9 +1777,33 @@ Fmtconv is a format-conversion plug-in for the Vapoursynth video processing engi
 
 Filters: fmtc.bitdepth, fmtc.convert,  core.fmtc.matrix, fmtc.resample, fmtc.transfer, fmtc.primaries,  core.fmtc.matrix2020cl, fmtc.stack16tonative, nativetostack16
 
-Used Version: r20
+Used Version: 20
 
 http://github.com/EleonoreMizo/fmtconv
+
+
+fvsfunc
+~~~~~~~
+
+Small collection of VapourSynth functions
+
+Filters: fvsfunc.GradFun3mod, fvsfunc.DescaleM, fvsfunc.Downscale444, fvsfunc.JIVTC, fvsfunc.OverlayInter, fvsfunc.AutoDeblock, fvsfunc.ReplaceFrames, fvsfunc.maa, fvsfunc.TemporalDegrain, fvsfunc.DescaleAA, fvsfunc.InsertSign
+
+Used Version: 2018-10-28
+
+https://github.com/Irrational-Encoding-Wizardry/fvsfunc
+
+
+G41Fun
+~~~~~~
+
+The replaced script for hnwvsfunc with re-written functions.
+
+Filters: G41Fun.mClean, G41Fun.NonlinUSM, G41Fun.DetailSharpen, G41Fun.LUSM, G41Fun.JohnFPS, G41Fun.TemporalDegrain2, G41Fun.MCDegrainSharp, G41Fun.FineSharp, G41Fun.psharpen, G41Fun.QTGMC, G41Fun.SMDegrain, G41Fun.daamod, G41Fun.STPressoHD, G41Fun.MLDegrain, G41Fun.Hysteria, G41Fun.SuperToon, G41Fun.EdgeDetect, G41Fun.SpotLess, G41Fun.HQDeringmod, G41Fun.LSFmod, G41Fun.SeeSaw, G41Fun.MaskedDHA
+
+Used Version: 1.0
+
+https://github.com/Helenerineium/hnwvsfunc
 
 
 havsfunc
@@ -1799,21 +1813,9 @@ Various popular AviSynth scripts ported To VapourSynth.
 
 Filters: havsfunc.QTGMC, havsfunc.daa, havsfunc.santiag, havsfunc.FixChromaBleedingMod, havsfunc.Deblock_QED, havsfunc.DeHalo_alpha, havsfunc.FineDehalo, havsfunc.YAHR, havsfunc.HQDeringmod, havsfunc.smartfademod, havsfunc.srestore, havsfunc.ivtc_txt60mc, havsfunc.logoNR, havsfunc.Vinverse, havsfunc.Vinverse2, havsfunc.LUTDeCrawl, havsfunc.LUTDeRainbow, havsfunc.Stab, havsfunc.GrainStabilizeMC, havsfunc.MCTemporalDenoise, havsfunc.SMDegrain, havsfunc.STPresso, havsfunc.SigmoidInverse, havsfunc.SigmoidDirect, havsfunc.GrainFactory3, havsfunc.InterFrame, havsfunc.SmoothLevels, havsfunc.FastLineDarkenMOD, havsfunc.Toon, havsfunc.LSFmod, havsfunc.TemporalDegrain, havsfunc.aaf, havsfunc.AverageFrames, havsfunc.Bob, havsfunc.ChangeFPS, havsfunc.Clamp, havsfunc.KNLMeansCL, havsfunc.Overlay, havsfunc.Padding, havsfunc.Resize, havsfunc.SCDetect, havsfunc.Weave, havsfunc.ContraSharpening, havsfunc.MinBlur, havsfunc.sbr, havsfunc.DitherLumaRebuild, havsfunc.mt_expand_multi, havsfunc.mt_inpand_multi, havsfunc.mt_inflate_multi, havsfunc.mt_deflate_multi, havsfunc.EdgeCleaner
 
-Used Version: 2017-03-06
+Used Version: 31
 
 http://github.com/HomeOfVapourSynthEvolution/havsfunc
-
-
-hnwvsfunc
-~~~~~~~~~
-
-MVTools is a set of filters for motion estimation and compensation.
-
-Filters: hnwvsfunc.mClean, hnwvsfunc.NonlinUSM, hnwvsfunc.DetailSharpen, hnwvsfunc.LUSM, hnwvsfunc.JohnFPS, hnwvsfunc.blah, hnwvsfunc.ReCon, hnwvsfunc.MCDegrainSharp, hnwvsfunc.FineSharp, hnwvsfunc.psharpen, hnwvsfunc.QTGMC, hnwvsfunc.SMDegrain, hnwvsfunc.STPressoHD, hnwvsfunc.MLDegrain, hnwvsfunc.Hysteria, hnwvsfunc.SuperToon, hnwvsfunc.EdgeDetect, hnwvsfunc.SpotLess, hnwvsfunc.HQDeringmod, hnwvsfunc.MedSharp, hnwvsfunc.MedSharp2, hnwvsfunc.LSFmod, hnwvsfunc.SeeSaw
-
-Used Version: 1.31
-
-https://github.com/Helenerineium/hnwvsfunc
 
 
 HQDN3D
@@ -1896,7 +1898,7 @@ Muonium's VapourSynth functions.
 
 Filters: muvsfunc.LDMerge, muvsfunc.Compare, muvsfunc.ExInpand, muvsfunc.InDeflate, muvsfunc.MultiRemoveGrain, muvsfunc.GradFun3, muvsfunc.AnimeMask, muvsfunc.PolygonExInpand, muvsfunc.Luma, muvsfunc.ediaa, muvsfunc.nnedi3aa, muvsfunc.maa, muvsfunc.SharpAAMcmod, muvsfunc.TEdge, muvsfunc.Sort, muvsfunc.Soothe_mod, muvsfunc.TemporalSoften, muvsfunc.FixTelecinedFades, muvsfunc.TCannyHelper, muvsfunc.MergeChroma, muvsfunc.firniture, muvsfunc.BoxFilter, muvsfunc.SmoothGrad, muvsfunc.DeFilter, muvsfunc.scale, muvsfunc.ColorBarsHD, muvsfunc.SeeSaw, muvsfunc.abcxyz, muvsfunc.Sharpen, muvsfunc.Blur, muvsfunc.BlindDeHalo3, muvsfunc.dfttestMC, muvsfunc.TurnLeft, muvsfunc.TurnRight, muvsfunc.BalanceBorders, muvsfunc.DisplayHistogram, muvsfunc.GuidedFilter, muvsfunc.GMSD, muvsfunc.SSIM, muvsfunc.SSIM_downsample, muvsfunc.LocalStatisticsMatching, muvsfunc.LocalStatistics, muvsfunc.TextSub16, muvsfunc.TMinBlur, muvsfunc.mdering, muvsfunc.BMAFilter, muvsfunc.LLSURE, muvsfunc.YAHRmod, muvsfunc.RandomInterleave
 
-Used Version: 2018-07-20
+Used Version: 0.2.0
 
 https://github.com/WolframRhodium/muvsfunc
 
@@ -1908,7 +1910,7 @@ MVTools is a set of filters for motion estimation and compensation.
 
 Filters: mvmulti.StoreVect, mvmulti.Analyse, mvmulti.Recalculate, mvmulti.Compensate, mvmulti.Restore, mvmulti.Flow, mvmulti.DegrainN
 
-Used Version: 2017-08-13
+Used Version: 20
 
 http://github.com/dubhater/vapoursynth-mvtools
 
@@ -1961,6 +1963,18 @@ Used Version: v12
 http://github.com/dubhater/vapoursynth-nnedi3
 
 
+nnedi3_rpow2
+~~~~~~~~~~~~
+
+nnedi3_rpow2 ported from Avisynth for VapourSynth
+
+Filters: nnedi3_rpow2
+
+Used Version: 1.0
+
+https://github.com/Irrational-Encoding-Wizardry/fvsfunc
+
+
 nnedi3cl
 ~~~~~~~~
 
@@ -1968,7 +1982,7 @@ nnedi3 is an intra-field only deinterlacer. It takes a frame, throws away one fi
 
 Filters: nnedi3cl.NNEDI3CL
 
-Used Version: 2017-10-28
+Used Version: 7.2
 
 https://github.com/HomeOfVapourSynthEvolution/VapourSynth-NNEDI3CL
 
@@ -1978,7 +1992,7 @@ Oyster
 
 Oyster is an experimental implement of the Blocking Matching concept, designed specifically for compression artifacts removal.
 
-Filters: Osyter.Basic, Oyster.Deringing, Oyster.Destaircase, Oyster.Deblocking, Oyster.Super
+Filters: Oyster.Basic, Oyster.Deringing, Oyster.Destaircase, Oyster.Deblocking, Oyster.Super
 
 Used Version: 2017-02-10
 
@@ -2050,7 +2064,7 @@ SVPFlow 1
 
 Motion vectors search plugin  is a deeply refactored and modified version of MVTools2 Avisynth plugin
 
-Filters: core.svp1.Super, core.svp1.Analyse
+Filters: core.svp1.Super, core.svp1.Analyse, core.svp1.Convert
 
 Used Version: 4.2.0.133
 
@@ -2062,7 +2076,7 @@ SVPFlow 2
 
 Motion vectors search plugin is a deeply refactored and modified version of MVTools2 Avisynth plugin
 
-Filters: core.svp2.SmoothFps, core.svp2.Convert
+Filters: core.svp2.SmoothFps
 
 Used Version: 4.2.0.142
 
@@ -2136,7 +2150,7 @@ Allows Usage of 3DLuts.
 
 Filters: timecube.Cube
 
-Used Version: 2018-01-15
+Used Version: 2.0
 
 https://github.com/sekrit-twc/timecube
 
@@ -2220,7 +2234,7 @@ AviSynth subtitle plugin with support for vobsub srt and ass.
 
 Filters: vsfm.VobSub, vsfm.TextSubMod
 
-Used Version: 1.1.9.0
+Used Version: 5.2
 
 http://github.com/HomeOfVapourSynthEvolution/VSFilterMod
 

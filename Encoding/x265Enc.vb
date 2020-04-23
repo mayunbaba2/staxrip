@@ -188,13 +188,18 @@ Public Class x265Params
     Property Decoder As New OptionParam With {
         .Text = "Decoder",
         .Options = {"AviSynth/VapourSynth", "QSVEnc (Intel)", "ffmpeg (Intel)", "ffmpeg (DXVA2)"},
-        .Values = {"avs", "qs", "ffqsv", "ffdxva"}}
+        .Values = {"script", "qs", "ffqsv", "ffdxva"}}
+
+    Property PipingTool As New OptionParam With {
+        .Text = "Piping Tool",
+        .Options = {"Automatic", "None", "vspipe", "avs2pipemod", "ffmpeg"},
+        .Values = {"auto", "none", "vspipe", "avs2pipemod", "ffmpeg"}}
 
     Property Quant As New NumParam With {
         .Switches = {"--crf", "--qp"},
         .Name = "Quant",
         .Text = "Quality",
-        .Value = 20,
+        .Value = 28,
         .Config = {0, 51, 1, 1}}
 
     Property chunkstart As New NumParam With {
@@ -218,14 +223,14 @@ Public Class x265Params
     Property Tune As New OptionParam With {
         .Switch = "--tune",
         .Text = "Tune",
-        .Options = {"None", "PSNR", "SSIM", "Grain", "Fast Decode", "Zero Latency"}}
+        .Options = {"None", "PSNR", "SSIM", "Grain", "Fast Decode", "Zero Latency", "Animation"}}
 
     Property Mode As New OptionParam With {
         .Name = "Mode",
         .Text = "Mode",
         .Switches = {"--bitrate", "--qp", "--crf", "--pass"},
         .Options = {"Bitrate", "Quantizer", "Quality", "Two Pass", "Three Pass"},
-        .Value = 2}
+        .Value = 3}
 
     Property SSIM As New BoolParam With {
         .Switch = "--ssim",
@@ -270,6 +275,12 @@ Public Class x265Params
         .Switch = "--ref",
         .Text = "Ref Frames",
         .Config = {1, 16}}
+
+    Property slowpass As New BoolParam With {
+        .Switch = "--slow-firstpass",
+        .NoSwitch = "--no-slow-firstpass",
+        .Init = True,
+        .Text = "Slow Firstpass"}
 
     Property [Me] As New OptionParam With {
         .Switch = "--me",
@@ -375,6 +386,12 @@ Public Class x265Params
         .Text = "Min CU size",
         .Options = {"32", "16", "8"}}
 
+    Property refinectudistortion As New OptionParam With {
+        .Switch = "--refine-ctu-distortion",
+        .Text = "Min CU size",
+        .InitValue = 0,
+        .Options = {"0", "1"}}
+
     Property MaxCuSize As New OptionParam With {
         .Switch = "--ctu",
         .Text = "Max CU size",
@@ -464,6 +481,12 @@ Public Class x265Params
         .Text = "Psy RDOQ",
         .Config = {0, 50, 0.05, 2}}
 
+    Property qpadaptationrange As New NumParam With {
+        .Switch = " --qp-adaptation-range",
+        .Text = "QP Adaptation Range",
+        .Init = 1.0,
+        .Config = {1, 6, 0.05, 2}}
+
     Property CRFmax As New NumParam With {
         .Switch = "--crf-max",
         .Text = "Maximum CRF",
@@ -527,13 +550,6 @@ Public Class x265Params
     Property maxLuma As New NumParam With {
         .Switch = "--max-luma",
         .Text = "Maximum Luma"}
-
-    'Property Profile As New OptionParam With {
-    '    .Switch = "--profile",
-    '    .Text = "Profile",
-    '    .Value = 2,
-    '    .Options = {"Unrestricted", "Main", "Main 10", "Main - Intra", "Main Still Picture", "Main 422 - 8", "Main 444 - Intra", "Main 444 - Still Picture", "Main 444 - 8", "Main 10 - Intra", "Main 422 - 10", "Main 422 - 10 - Intra", "Main 444 - 10", "Main 444 - 10 - Intra", "Main 12", "Main 12 - Intra", "Main 422 - 12", "Main 422 - 12 - Intra", "Main 444 - 12", "Main 444 - 12 - Intra"}}
-    '.VisibleFunc = Function() OutputDepth.Value = 0, .Options = {"Main", "Main 10", "Main - Intra", "Main Still Picture", "Main 422 - 8", "Main 444 - Intra", "Main 444 - Still Picture", "Main 444 - 8"}}
 
     Property OutputDepth As New OptionParam With {
         .Switch = "--output-depth",
@@ -634,7 +650,7 @@ Public Class x265Params
         .Config = {0.5, 1.0, 0.1, 1},
         .Init = 1}
 
-    Property VBVfradj As New NumParam With { 'Need More Testing But Should work As it is.
+    Property VBVfradj As New NumParam With {
         .Switch = "--vbv-end-fr-adj",
         .Text = "VBV Adjust",
         .Config = {0, 1, 0.1, 1},
@@ -698,6 +714,7 @@ Public Class x265Params
 
     Property Custom As New StringParam With {
         .Text = "Custom",
+        .Quotes = QuotesMode.Never,
         .AlwaysOn = True,
         .InitAction = Sub(tb)
                           tb.Edit.Expand = True
@@ -708,6 +725,7 @@ Public Class x265Params
 
     Property CustomFirstPass As New StringParam With {
         .Text = "Custom" + BR + "First Pass",
+        .Quotes = QuotesMode.Never,
         .InitAction = Sub(tb)
                           tb.Edit.Expand = True
                           tb.Edit.TextBox.Multiline = True
@@ -717,6 +735,7 @@ Public Class x265Params
 
     Property CustomSecondPass As New StringParam With {
         .Text = "Custom" + BR + "Second Pass",
+        .Quotes = QuotesMode.Never,
         .InitAction = Sub(tb)
                           tb.Edit.Expand = True
                           tb.Edit.TextBox.Multiline = True
@@ -765,11 +784,6 @@ Public Class x265Params
         .Options = {"0", "1", "2", "3"},
         .InitValue = 3}
 
-    Property CSV As New BoolParam With {
-        .Switch = "--csv",
-        .Text = "Write encoding results to a comma separated value log file",
-        .ArgsFunc = Function() If(CSV.Value, "--csv """ + p.TargetFile.DirAndBase + ".csv""", Nothing)}
-
     Property RecursionSkip As New BoolParam With {
         .Switch = "--rskip",
         .NoSwitch = "--no-rskip",
@@ -810,15 +824,16 @@ Public Class x265Params
                 ItemsValue = New List(Of CommandLineParam)
 
                 Add("Basic", Preset, Tune,
-                    New OptionParam With {.Switch = "--profile", .Text = "Profile", .Name = "ProfileMain8", .VisibleFunc = Function() OutputDepth.Value = 0, .Options = {"Unrestricted", "Main", "Main - Intra", "Main Still Picture", "Main 444 - 8", "Main 444 - Intra", "Main 444 - Main Still Picture"}},
+                    New OptionParam With {.Switch = "--profile", .Text = "Profile", .Name = "ProfileMain8", .InitValue = 1, .VisibleFunc = Function() OutputDepth.Value = 0, .Options = {"Unrestricted", "Main", "Main - Intra", "Main Still Picture", "Main 444 - 8", "Main 444 - Intra", "Main 444 - Main Still Picture"}},
                     New OptionParam With {.Switch = "--profile", .Text = "Profile", .Name = "ProfileMain10", .InitValue = 1, .VisibleFunc = Function() OutputDepth.Value = 1, .Options = {"Unrestricted", "Main 10", "Main 10 - Intra", "Main 422 - 10", "Main 422 - 10 - Intra", "Main 444 - 10", "Main 444 - 10 - Intra"}},
-                    New OptionParam With {.Switch = "--profile", .Text = "Profile", .Name = "ProfileMain12", .VisibleFunc = Function() OutputDepth.Value = 2, .Options = {"Unrestricted", "Main 12", "Main 12 - Intra", "Main 422 - 12", "Main 422 - 12 - Intra", "Main 444 - 12", "Main 444 - 12 - Intra"}},
+                    New OptionParam With {.Switch = "--profile", .Text = "Profile", .Name = "ProfileMain12", .InitValue = 1, .VisibleFunc = Function() OutputDepth.Value = 2, .Options = {"Unrestricted", "Main 12", "Main 12 - Intra", "Main 422 - 12", "Main 422 - 12 - Intra", "Main 444 - 12", "Main 444 - 12 - Intra"}},
                     New OptionParam With {.Switch = "--level-idc", .Switches = {"--level"}, .Text = "Level", .Options = {"Unrestricted", "1", "2", "2.1", "3", "3.1", "4", "4.1", "5", "5.1", "5.2", "6", "6.1", "6.2", "8.5"}},
                     Mode, OutputDepth, Quant)
-                Add("Analysis 1", RD,
-                    New StringParam With {.Switch = "--analysis-reuse-file", .Text = "Analysis File", .Quotes = True, .BrowseFile = True},
-                    New StringParam With {.Switch = "--analysis-load", .Text = "Analysis Load", .Quotes = True, .BrowseFile = True},
-                    New StringParam With {.Switch = "--analysis-save", .Text = "Analysis Save", .Quotes = True},
+                Add("Analysis", RD,
+                    New StringParam With {.Switch = "--analysis-reuse-file", .Text = "Analysis File", .BrowseFile = True},
+                    New StringParam With {.Switch = "--analysis-load", .Text = "Analysis Load", .BrowseFile = True},
+                    New StringParam With {.Switch = "--analysis-save", .Text = "Analysis Save"},
+                    refinectudistortion,
                     MinCuSize, MaxCuSize, MaxTuSize, LimitRefs)
                 Add("Analysis 2",
                     New NumParam With {.Switch = "--analysis-reuse-level", .Text = "Refine Level", .Config = {1, 10}, .Init = 5},
@@ -828,7 +843,9 @@ Public Class x265Params
                     PsyRDOQ,
                     New NumParam With {.Switch = "--dynamic-rd", .Text = "Dynamic RD", .Config = {0, 4}},
                     New NumParam With {.Switch = "--refine-intra", .Text = "Refine Intra", .Config = {0, 4}},
-                    New NumParam With {.Switch = "--refine-inter", .Text = "Refine Inter", .Config = {0, 3}})
+                    New NumParam With {.Switch = "--refine-inter", .Text = "Refine Inter", .Config = {0, 3}},
+                    qpadaptationrange,
+                    New BoolParam With {.Switch = "--hevc-aq", .Text = "Mode for HEVC Adaptive Quantization", .Init = False})
                 Add("Analysis 3", Rect, AMP,
                     New BoolParam With {.Switch = "--tskip", .Text = "Enable evaluation of transform skip coding for 4x4 TU coded blocks"},
                     New BoolParam With {.Switch = "--refine-mv", .Text = "Enable refinement of motion vector for scaled video"},
@@ -840,23 +857,25 @@ Public Class x265Params
                     RecursionSkip,
                     New BoolParam With {.Switch = "--ssim-rd", .Text = "SSIM RDO"},
                     New BoolParam With {.Switch = "--splitrd-skip", .Text = "Enable skipping split RD analysis"})
-                Add("Rate Control 1",
+                Add("Rate Control",
                     New StringParam With {.Switch = "--zones", .Text = "Zones"},
+                    New StringParam With {.Switch = "--zonefile", .Text = "Zone File", .BrowseFile = True},
                     AQmode, qgSize, AQStrength, QComp,
                     New NumParam With {.Switch = "--cbqpoffs", .Text = "CB QP Offset", .Config = {-12, 12}},
                     New NumParam With {.Switch = "--crqpoffs", .Text = "CR QP Offset", .Config = {-12, 12}},
-                    NRintra, NRinter, qpmin, qpmax, qpstep, CRFmin, CRFmax, constvbv)
+                    NRintra, NRinter, qpmin, qpmax, qpstep, CRFmin, CRFmax)
                 Add("Rate Control 2",
                     VBVbufsize, VBVmaxrate, VBVinit, VBVend, VBVfradj,
                     IPRatio, PBRatio, Cplxblur, QBlur,
                     CUtree, Lossless, StrictCBR, rcGrain,
                     multi_pass_opt_analysis,
                     multi_pass_opt_distortion,
-                    New BoolParam() With {.Switch = "--aq-motion", .Text = "AQ Motion"})
+                    New BoolParam() With {.Switch = "--aq-motion", .Text = "AQ Motion"},
+                    constvbv)
                 Add("Motion Search", SubME, [Me], MErange, MaxMerge, Weightp, Weightb, TemporalMVP,
                     New BoolParam With {.Switch = "--analyze-src-pics", .NoSwitch = "--no-analyze-src-pics", .Text = "Analyze SRC Pics"})
-                Add("Slice Decision 1",
-                    New StringParam With {.Switch = "--refine-mv-type", .Text = "Refine mv Type", .Quotes = True},
+                Add("Slice Decision",
+                    New StringParam With {.Switch = "--refine-analysis-type", .Text = "Refine Analysis Type"},
                     New OptionParam() With {.Switch = "--force-flush", .Text = "Force Flush", .Expand = True, .IntegerValue = True, .Options = {"Flush the encoder only when all the input pictures are over", "Flush all the frames even when the input is not over", "Flush the slicetype decided frames only"}},
                     BAdapt,
                     New OptionParam With {.Switch = "--ctu-info", .Text = "CTU Info", .Options = {"0", "1", "2", "4", "6"}},
@@ -869,21 +888,23 @@ Public Class x265Params
                     New NumParam() With {.Switch = "--scenecut-bias", .Text = "Scenecut Bias", .Init = 5, .Config = {0, 100, 1, 1}},
                     New NumParam() With {.Switch = "--radl", .Text = "Radl", .Init = 0},
                     Ref)
-                Add("Slice Decision 2", MinKeyint, Keyint, Bpyramid, OpenGop, IntraRefresh)
+                Add("Slice Decision 2", MinKeyint, Keyint, Bpyramid, OpenGop, IntraRefresh,
+                    New BoolParam() With {.Switch = "--fades", .Text = "Enable detection and handling of fade-in regions"})
                 Add("Performance",
-                    New StringParam With {.Switch = "--pools", .Switches = {"--numa-pools"}, .Text = "Pools", .Quotes = True},
+                    New StringParam With {.Switch = "--pools", .Switches = {"--numa-pools"}, .Text = "Pools"},
                     New NumParam With {.Switch = "--slices", .Text = "Slices", .Init = 1},
                     FrameThreads, WPP, Pmode, PME,
-                    New BoolParam With {.Switch = "--asm", .NoSwitch = "--no-asm", .Text = "ASM", .Init = True},
-                    New BoolParam With {.Switch = "--asm avx512", .Text = "AVX 512", .Init = False},
-                    New BoolParam With {.Switch = "--slow-firstpass", .NoSwitch = "--no-slow-firstpass", .Init = True, .Text = "Slow Firstpass"},
+                    New BoolParam With {.Switch = "--asm", .NoSwitch = "--no-asm", .Text = "ASM", .Help = "For AVX512 Vector CPU's, Experiential Feature", .Init = True},
+                    New BoolParam With {.Switch = "--asm avx512", .Text = "AVX 512"},
+                    slowpass,
                     New BoolParam With {.Switch = "--copy-pic", .NoSwitch = "--no-copy-pic", .Init = True, .Text = "Copy Pic"})
                 Add("Statistic",
+                    New StringParam With {.Switch = "--csv", .Text = "CSV", .BrowseFile = True},
                     New OptionParam With {.Switch = "--log-level", .Switches = {"--log"}, .Text = "Log Level", .Options = {"None", "Error", "Warning", "Info", "Debug", "Full"}, .InitValue = 3},
-                    csvloglevel, CSV, SSIM, PSNR)
-                Add("VUI 1",
-                    New StringParam With {.Switch = "--master-display", .Text = "Master Display", .Quotes = True},
-                    New StringParam With {.Switch = "--dhdr10-info", .Text = "DHDR10-Info", .Quotes = True, .BrowseFile = True},
+                    csvloglevel, SSIM, PSNR)
+                Add("VUI",
+                    New StringParam With {.Switch = "--master-display", .Text = "Master Display"},
+                    New StringParam With {.Switch = "--dhdr10-info", .Text = "DHDR10-Info", .BrowseFile = True},
                     New OptionParam With {.Switch = "--colorprim", .Text = "Colorprim", .Options = {"Undefined", "BT 2020", "BT 470 BG", "BT 470 M", "BT 709", "Film", "SMPTE 170 M", "SMPTE 240 M", "SMPTE 428", "SMPTE 431", "SMPTE 432"}},
                     New OptionParam With {.Switch = "--colormatrix", .Text = "Colormatrix", .Options = {"Undefined", "BT 2020 C", "BT 2020 NC", "BT 470 BG", "BT 709", "Chroma-Derived-C", "Chroma-Derived-NC", "FCC", "GBR", "ICTCP", "SMPTE 170 M", "SMPTE 2085", "SMPTE 240 M", "YCgCo"}},
                     New OptionParam With {.Switch = "--transfer", .Text = "Transfer", .Options = {"Undefined", "ARIB-STD-B67", "BT 1361 E", "BT 2020-10", "BT 2020-12", "BT 470 BG", "BT 470 M", "BT 709", "IEC 61966-2-1", "IEC 61966-2-4", "Linear", "Log 100", "Log 316", "SMPTE 170 M", "SMPTE 2084", "SMPTE 240 M", "SMPTE 428"}},
@@ -893,27 +914,32 @@ Public Class x265Params
                     New BoolParam With {.Switch = "--hdr-opt", .Text = "Add luma and chroma offsets for HDR/WCG content"},
                     New BoolParam With {.Switch = "--dhdr10-opt", .Text = "Limit frames for which tone mapping information is inserted as SEI message"},
                     New BoolParam With {.Switch = "--atc-sei", .Text = "Emit the alternative transfer characteristics SEI message"},
+                    New BoolParam With {.Switch = "--cll", .NoSwitch = "--no-cll", .Text = "Emit content light level info SEI", .Init = True},
                     New BoolParam With {.Switch = "--pic-struct", .Text = "Set the picture structure and emits it in the picture timing SEI message"})
                 Add("VUI 2",
-                    New StringParam With {.Switch = "--nalu-file", .Text = "Nalu File", .Quotes = True, .BrowseFile = True},
+                    New StringParam With {.Switch = "--nalu-file", .Text = "Nalu File", .BrowseFile = True},
                     New StringParam With {.Switch = "--sar", .Text = "Sample Aspect Ratio", .InitValue = "auto", .Menu = s.ParMenu, .ArgsFunc = AddressOf GetSAR},
                     New OptionParam With {.Switch = "--videoformat", .Text = "Videoformat", .Options = {"Undefined", "Component", "PAL", "NTSC", "SECAM", "MAC"}},
                     New OptionParam With {.Switch = "--overscan", .Text = "Overscan", .Options = {"Undefined", "Show", "Crop"}},
                     New OptionParam With {.Switch = "--display-window", .Text = "Display Window", .Options = {"Undefined", "Left", "Top", "Right", "Top"}},
                     Chromaloc)
                 Add("Bitstream",
-                    Hash,
+                    New OptionParam With {.Switch = "--dolby-vision-profile", .Text = "Dolby Vision Profile", .InitValue = 0, .Options = {"0", "5", "8.1", "8.2"}},
+                    New StringParam With {.Switch = "--dolby-vision-rpu", .Text = "Dolby Vision RPU", .BrowseFile = True},
                     New NumParam With {.Switch = "--log2-max-poc-lsb", .Text = "Maximum Picture Order Count", .Init = 8},
                     RepeatHeaders, Info, HRD, AUD,
-                    New BoolParam With {.Switch = "--temporal-layers", .Text = "Temporal Layers"},
+                    New BoolParam With {.Switch = "---hrd-concat", .Init = False, .Text = "HRD Concat"},
                     New BoolParam With {.Switch = "--vui-timing-info", .Text = "VUI Timing Info", .Init = True},
                     New BoolParam With {.Switch = "--vui-hrd-info", .Text = "VUI HRD Info", .Init = True},
+                    New BoolParam With {.Switch = "--idr-recovery-sei", .Init = False, .Text = "Recovery SEI"},
+                    New BoolParam With {.Switch = "--single-sei", .Init = False, .Text = "Single SEI"})
+                Add("Bitstream 2",
+                    Hash,
+                    New BoolParam With {.Switch = "--temporal-layers", .Text = "Temporal Layers"},
                     New BoolParam With {.Switch = "--opt-qp-pps", .Init = False, .Text = "Optimize QP in PPS"},
                     New BoolParam With {.Switch = "--opt-ref-list-length-pps", .Init = False, .Text = "Optimize L0 and L1 Ref List Length in PPS"},
                     New BoolParam With {.Switch = "--multi-pass-opt-rps", .Init = False, .Text = "Enable Storing", .Help = "Enable Storing commonly used RPS in SPS in multi pass mode"},
-                    New BoolParam With {.Switch = "--opt-cu-delta-qp", .Text = "Optimize CU level QPs", .Help = "Optimize CU level QPs pulling up lower QPs close to meanQP", .Init = False},
-                    New BoolParam With {.Switch = "--idr-recovery-sei", .Init = False, .Text = "Recovery SEI"},
-                    New BoolParam With {.Switch = "--single-sei", .Init = False, .Text = "Single SEI"})
+                    New BoolParam With {.Switch = "--opt-cu-delta-qp", .Text = "Optimize CU level QPs", .Help = "Optimize CU level QPs pulling up lower QPs close to meanQP", .Init = False})
                 Add("Input/Output",
                     New OptionParam With {.Switch = "--input-depth", .Text = "Input Depth", .Options = {"Automatic", "8", "10", "12", "14", "16"}},
                     New OptionParam With {.Switch = "--input-csp", .Text = "Input CSP", .Options = {"Automatic", "I400", "I420", "I422", "I444", "NV12", "NV16"}},
@@ -921,16 +947,17 @@ Public Class x265Params
                     New OptionParam With {.Switch = "--fps", .Text = "Frame Rate", .Options = {"Automatic", "24000/1001", "24", "25", "30000/1001", "30", "50", "60000/1001", "60"}},
                     Frames, chunkstart, chunkend,
                     New NumParam With {.Switch = "--seek", .Text = "Seek"},
-                    New BoolParam With {.Switch = "--dither", .Text = "Dither (High Quality Downscaling)"})
+                    New BoolParam With {.Switch = "--dither", .Text = "Dither (High Quality Downscaling)"},
+                    New BoolParam With {.Switch = "--field", .NoSwitch = "--no-field", .Text = "Field Coding"})
                 Add("Loop Filter", Deblock, DeblockA, DeblockB, SAO,
                     New BoolParam With {.Switch = "--limit-sao", .Text = "Limit Sample Adaptive Offset"},
                     SAOnonDeblock)
                 Add("Other",
-                    New StringParam With {.Switch = "--lambda-file", .Text = "Lambda File", .Quotes = True, .BrowseFile = True},
-                    New StringParam With {.Switch = "--qpfile", .Text = "QP File", .Quotes = True, .BrowseFile = True},
-                    New StringParam With {.Switch = "--recon", .Text = "Recon File", .Quotes = True, .BrowseFile = True},
-                    New StringParam With {.Switch = "--scaling-list", .Text = "Scaling List", .Quotes = True},
-                    Decoder, PsyRD, CompCheck, CompCheckAimedQuality,
+                    New StringParam With {.Switch = "--lambda-file", .Text = "Lambda File", .BrowseFile = True},
+                    New StringParam With {.Switch = "--qpfile", .Text = "QP File", .BrowseFile = True},
+                    New StringParam With {.Switch = "--recon", .Text = "Recon File", .BrowseFile = True},
+                    New StringParam With {.Switch = "--scaling-list", .Text = "Scaling List"},
+                    Decoder, PipingTool, PsyRD, CompCheck, CompCheckAimedQuality,
                     New NumParam With {.Switch = "--recon-depth", .Text = "Recon Depth"},
                     RDpenalty, maxausizefactor)
                 Add("Other 2",
@@ -1002,12 +1029,28 @@ Public Class x265Params
                 Decoder.ValueText <> "avs" AndAlso p.Script.IsFilterActive("Crop")
 
             Select Case Decoder.ValueText
-                Case "avs"
-                    If p.Script.Engine = ScriptEngine.VapourSynth Then
-                        sb.Append(Package.vspipe.Path.Escape + " " + script.Path.Escape + " - --y4m | " + Package.x265.Path.Escape)
-                    Else
-                        sb.Append(Package.avs2pipemod.Path.Escape + " -y4mp " + script.Path.Escape + " | " + Package.x265.Path.Escape)
+                Case "script"
+                    Dim pipeString = ""
+                    Dim pipeTool = PipingTool.ValueText
+
+                    If pipeTool = "auto" Then
+                        If p.Script.Engine = ScriptEngine.VapourSynth Then
+                            pipeTool = "vspipe"
+                        Else
+                            pipeTool = "avs2pipemod"
+                        End If
                     End If
+
+                    Select Case pipeTool
+                        Case "vspipe"
+                            pipeString = Package.vspipe.Path.Escape + " " + script.Path.Escape + " - --y4m | "
+                        Case "avs2pipemod"
+                            pipeString = Package.avs2pipemod.Path.Escape + " -y4mp " + script.Path.Escape + " | "
+                        Case "ffmpeg"
+                            pipeString = Package.ffmpeg.Path.Escape + " -i " + script.Path.Escape + " -f yuv4mpegpipe" + " -loglevel fatal -hide_banner - | "
+                    End Select
+
+                    sb.Append(pipeString + Package.x265.Path.Escape)
                 Case "qs"
                     Dim crop = If(isCropped, " --crop " & p.CropLeft & "," & p.CropTop & "," & p.CropRight & "," & p.CropBottom, "")
                     sb.Append(Package.QSVEnc.Path.Escape + " -o - -c raw" + crop + " -i " + p.SourceFile.Escape + " | " + Package.x265.Path.Escape)
@@ -1019,6 +1062,7 @@ Public Class x265Params
                     sb.Append(Package.ffmpeg.Path.Escape + " -threads 1 -hwaccel dxva2 -i " + p.SourceFile.Escape + " -f yuv4mpegpipe" + crop + " -loglevel fatal -hide_banner - | " + Package.x265.Path.Escape)
             End Select
         End If
+
 
         If Mode.Value = x265RateMode.TwoPass OrElse Mode.Value = x265RateMode.ThreePass Then
             sb.Append(" --pass " & pass)
@@ -1048,19 +1092,26 @@ Public Class x265Params
         If q.Count > 0 Then sb.Append(" " + q.Select(Function(item) item.GetArgs).Join(" "))
 
         If includePaths Then
-            If Frames.Value = 0 AndAlso Not IsCustom(pass, "--frames") Then sb.Append(" --frames " & script.GetFrames)
-            sb.Append(" --y4m")
+            If PipingTool.ValueText <> "none" Then
+                If Frames.Value = 0 AndAlso Not IsCustom(pass, "--frames") Then
+                    sb.Append(" --frames " & script.GetFrames)
+                End If
+
+                sb.Append(" --y4m")
+            End If
 
             If Mode.Value = x265RateMode.TwoPass OrElse Mode.Value = x265RateMode.ThreePass Then
                 sb.Append(" --stats " + (p.TempDir + p.TargetFile.Base + ".stats").Escape)
             End If
 
+            Dim input = If(PipingTool.ValueText = "none", script.Path.Escape, "-")
+
             If (Mode.Value = x265RateMode.ThreePass AndAlso pass < 3) OrElse
                 Mode.Value = x265RateMode.TwoPass AndAlso pass = 1 Then
 
-                sb.Append(" --output NUL -")
+                sb.Append(" --output NUL " + input)
             Else
-                sb.Append(" --output " + targetPath.Escape + " - ")
+                sb.Append(" --output " + targetPath.Escape + " " + input)
             End If
         End If
 
@@ -1084,7 +1135,7 @@ Public Class x265Params
     End Function
 
     Sub ApplyPresetValues()
-        AQmode.Value = 1
+        AQmode.Value = 2
         AQStrength.Value = 1
         DeblockA.Value = 0
         DeblockB.Value = 0
@@ -1380,7 +1431,7 @@ Public Class x265Params
     End Sub
 
     Sub ApplyPresetDefaultValues()
-        AQmode.DefaultValue = 1
+        AQmode.DefaultValue = 2
         AQStrength.DefaultValue = 1
         DeblockA.DefaultValue = 0
         DeblockB.DefaultValue = 0
@@ -1714,6 +1765,13 @@ Public Class x265Params
                 Scenecut.Value = 0
                 CUtree.Value = False
                 FrameThreads.Value = 1
+            Case 6 '"Animation"
+                PsyRD.Value = 0.4
+                AQStrength.Value = 0.4
+                Deblock.Value = True
+                DeblockA.Value = 1
+                DeblockB.Value = 1
+                BFrames.Value = 6
         End Select
     End Sub
 
@@ -1756,6 +1814,11 @@ Public Class x265Params
                 Scenecut.DefaultValue = 0
                 CUtree.DefaultValue = False
                 FrameThreads.DefaultValue = 1
+            Case 6 '"Animation
+                PsyRD.DefaultValue = 0.4
+                AQStrength.DefaultValue = 0.4
+                Deblock.DefaultValue = False
+                BFrames.DefaultValue = 6
         End Select
     End Sub
 

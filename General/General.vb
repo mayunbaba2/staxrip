@@ -23,6 +23,12 @@ Public Class Folder
         End Get
     End Property
 
+    Shared ReadOnly Property Fonts() As String
+        Get
+            Return Environment.GetFolderPath(Environment.SpecialFolder.Fonts).FixDir
+        End Get
+    End Property
+
     Shared ReadOnly Property Startup() As String
         Get
             Return Application.StartupPath.FixDir
@@ -830,7 +836,7 @@ table {
             IsClosed = True
 
             Writer.WriteRaw("<p>&nbsp;</p>" + BR)
-            Writer.WriteRaw("<h5 align=""center"">Copyright &copy; 2002-" & DateTime.Now.Year & " stax76. All rights reserved.</h5><br>")
+            Writer.WriteRaw("<h5 align=""center"">Copyright &copy; 2002-" & DateTime.Now.Year & "</h5><br>")
             Writer.WriteEndElement() 'body
             Writer.WriteEndElement() 'html
             Writer.Close()

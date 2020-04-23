@@ -60,6 +60,7 @@ Public Class Package
     Shared Property eac3to As Package = Add(New Package With {
         .Name = "eac3to",
         .Filename = "eac3to.exe",
+        .DirPath = "Audio\eac3to",
         .WebURL = "http://forum.doom9.org/showthread.php?t=125966",
         .HelpURL = "http://en.wikibooks.org/wiki/Eac3to/How_to_Use",
         .Description = "Audio conversion command line app."})
@@ -67,6 +68,7 @@ Public Class Package
     Shared Property ffmpeg As Package = Add(New Package With {
         .Name = "ffmpeg",
         .Filename = "ffmpeg.exe",
+        .DirPath = "Encoders\ffmpeg",
         .WebURL = "http://ffmpeg.org",
         .HelpURL = "http://www.ffmpeg.org/ffmpeg-all.html",
         .Description = "Versatile audio video converter."})
@@ -76,12 +78,14 @@ Public Class Package
     Shared Property MediaInfo As Package = Add(New Package With {
         .Name = "MediaInfo",
         .Filename = "MediaInfo.dll",
+        .DirPath = "Support\MediaInfo",
         .WebURL = "http://mediaarea.net/en/MediaInfo",
         .Description = "MediaInfo is used by StaxRip to read infos from media files."})
 
     Shared Property MP4Box As Package = Add(New Package With {
         .Name = "MP4Box",
         .Filename = "MP4Box.exe",
+        .DirPath = "Support\MP4Box",
         .WebURL = "http://gpac.wp.mines-telecom.fr/",
         .HelpURL = "http://gpac.wp.mines-telecom.fr/mp4box/mp4box-documentation",
         .Description = "MP4Box is a MP4 muxing and demuxing command line app."})
@@ -93,6 +97,7 @@ Public Class Package
 
     Shared Property xvid_encraw As Package = Add(New Package With {
         .Name = "xvid_encraw",
+        .DirPath = "Encoders\xvid_encraw",
         .Filename = "xvid_encraw.exe",
         .Description = "XviD command line encoder",
         .HelpFile = "help.txt",
@@ -114,6 +119,7 @@ Public Class Package
     Shared Property fdkaac As Package = Add(New Package With {
         .Name = "fdkaac",
         .Filename = "fdkaac.exe",
+        .DirPath = "Audio\fdkaac",
         .HelpFile = "help.txt",
         .Description = "Command line AAC encoder based on libfdk-aac.",
         .URL = "http://github.com/nu774/fdkaac",
@@ -134,6 +140,7 @@ Public Class Package
         .Description = "StaxRip x64 supports both AviSynth+ x64 and VapourSynth x64 as scripting based video processing tool.",
         .WebURL = "http://www.vapoursynth.com",
         .HelpURL = "http://www.vapoursynth.com/doc",
+        .SetupFilename = "Installers\VapourSynth-R45.exe",
         .DownloadURL = "http://github.com/vapoursynth/vapoursynth/releases",
         .IsRequiredFunc = Function() p.Script.Engine = ScriptEngine.VapourSynth,
         .HintDirFunc = Function() Registry.LocalMachine.GetString("SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\VapourSynth_is1", "Inno Setup: App Path") + "\core64\"})
@@ -142,6 +149,7 @@ Public Class Package
         .Name = "DGIndex",
         .Filename = "DGIndex.exe",
         .LaunchName = "DGIndex.exe",
+        .DirPath = "Support\DGIndex",
         .HelpFile = "DGIndexManual.html",
         .Description = "MPEG-2 demuxing and indexing app.",
         .WebURL = "http://rationalqm.us/dgmpgdec/dgmpgdec.html"})
@@ -149,6 +157,7 @@ Public Class Package
     Shared Property BDSup2SubPP As Package = Add(New Package With {
         .Name = "BDSup2Sub++",
         .Filename = "bdsup2sub++.exe",
+        .DirPath = "Subtitles\BDSup2Sub++",
         .LaunchName = "bdsup2sub++.exe",
         .WebURL = "http://forum.doom9.org/showthread.php?p=1613303",
         .Description = "Converts Blu-ray subtitles to other formats like VobSub."})
@@ -156,6 +165,7 @@ Public Class Package
     Shared Property Rav1e As Package = Add(New Package With {
         .Name = "rav1e",
         .Filename = "rav1e.exe",
+        .DirPath = "Encoders\Rav1e",
         .Description = "a Faster and Safer AV1 Encoder",
         .WebURL = "https://github.com/xiph/rav1e",
         .HelpFile = "help.txt"})
@@ -163,8 +173,7 @@ Public Class Package
     Shared Property MTN As Package = Add(New Package With {
         .Name = "mtn",
         .Filename = "mtn.exe",
-        .DirPath = "mtn",
-        .HelpFile = "help.txt",
+        .DirPath = "Thumbnails\MTN",
         .Description = "movie thumbnailer saves thumbnails (screenshots) of movie or video files to jpeg files. StaxRip uses a custom built version with HEVC support added in and also includes the latest FFMPEG.",
         .WebURL = "https://github.com/Revan654/Movie-Thumbnailer-mtn",
         .HelpURL = "http://moviethumbnail.sourceforge.net/usage.en.html"})
@@ -186,12 +195,6 @@ Public Class Package
         .LaunchName = "mpvnet.exe",
         .URL = "https://github.com/Revan654/mpvnet/",
         .Description = "libmpv based media player."})
-
-    Shared Property UpdateAll As Package = Add(New Package With {
-        .Name = "Update",
-        .Filename = "Update.py",
-        .DirPath = "Update",
-        .Description = "Python Based Script that Checks and Updates StaxRip, Requires Python 3 + SitePackages"})
 
     Shared Property modPlus As Package = Add(New PluginPackage With {
         .Name = "modPlus",
@@ -246,6 +249,7 @@ Public Class Package
     Shared Property VSRip As Package = Add(New Package With {
         .Name = "VSRip",
         .Filename = "VSRip.exe",
+        .DirPath = "subtitles\VSRip",
         .Description = "VSRip rips VobSub subtitles.",
         .WebURL = "http://sourceforge.net/projects/guliverkli",
         .LaunchName = "VSRip.exe"})
@@ -266,7 +270,7 @@ Public Class Package
         .Description = "A modern rewrite of a simple but effective plugin to remove residual combing originally based on an AviSynth script by Did�e and then written as a plugin by tritical.",
         .AvsFilterNames = {"vinverse", "vinverse2"},
         .AvsFiltersFunc = Function() {
-            New VideoFilter("Restoration", "RCR | Vinverse", "Vinverse|vinverse(sstr=2.7, amnt=255, uv=3, scl=0.25);Vinverse2|vinverse2(sstr=2.7, amnt=255, uv=3, scl=0.25)$")}})
+            New VideoFilter("Restoration", "RCR | Vinverse", "$select:Vinverse|vinverse(sstr=2.7, amnt=255, uv=3, scl=0.25);Vinverse2|vinverse2(sstr=2.7, amnt=255, uv=3, scl=0.25)$")}})
 
     Shared Property scenechange As Package = Add(New PluginPackage With {
         .Name = "scenechange",
@@ -276,12 +280,14 @@ Public Class Package
     Shared Property avs2pipemod As Package = Add(New Package With {
         .Name = "avs2pipemod",
         .Filename = "avs2pipemod64.exe",
+        .DirPath = "Support\avs2pipemod",
         .WebURL = "http://github.com/chikuzen/avs2pipemod",
         .Description = "Given an AviSynth script as input, avs2pipemod can send video, audio, or information of various types to stdout for consumption by command line encoders or other tools."})
 
     Shared Property x264 As Package = Add(New Package With {
         .Name = "x264",
         .Filename = "x264.exe",
+        .DirPath = "Encoders\x264",
         .Description = "H.264 video encoding command line app.",
         .WebURL = "http://www.videolan.org/developers/x264.html",
         .HelpFile = "help.txt",
@@ -289,6 +295,7 @@ Public Class Package
 
     Shared Property x265 As Package = Add(New Package With {
         .Name = "x265",
+        .DirPath = "Encoders\x265",
         .Filename = "x265.exe",
         .WebURL = "http://x265.org",
         .HelpURL = "http://x265.readthedocs.org",
@@ -298,7 +305,7 @@ Public Class Package
     Shared Property mkvmerge As Package = Add(New Package With {
         .Name = "mkvmerge",
         .Filename = "mkvmerge.exe",
-        .DirPath = "MKVToolNix",
+        .DirPath = "Support\MKVToolNix",
         .WebURL = "https://mkvtoolnix.download/",
         .HelpURL = "https://mkvtoolnix.download/docs.html",
         .Description = "MKV muxing tool."})
@@ -306,7 +313,7 @@ Public Class Package
     Shared Property mkvinfo As Package = Add(New Package With {
         .Name = "mkvinfo",
         .Filename = "mkvinfo.exe",
-        .DirPath = "MKVToolNix",
+        .DirPath = "Support\MKVToolNix",
         .WebURL = "https://mkvtoolnix.download/",
         .HelpURL = "https://mkvtoolnix.download/docs.html",
         .Description = "MKV muxing tool."})
@@ -315,14 +322,14 @@ Public Class Package
         .Name = "PNGopt",
         .Filename = "apngopt.exe",
         .HelpFile = "help.txt",
-        .DirPath = "PNGopt",
+        .DirPath = "Thumbnails\PNGopt",
         .WebURL = "https://sourceforge.net/projects/apng/files/",
         .Description = "Opt Tools For Creating PNG"})
 
     Shared Property mkvextract As Package = Add(New Package With {
         .Name = "mkvextract",
         .Filename = "mkvextract.exe",
-        .DirPath = "MKVToolNix",
+        .DirPath = "Support\MKVToolNix",
         .WebURL = "https://mkvtoolnix.download/",
         .HelpURL = "https://mkvtoolnix.download/docs.html",
         .Description = "MKV demuxing tool."})
@@ -330,6 +337,7 @@ Public Class Package
     Shared Property NVEnc As Package = Add(New Package With {
         .Name = "NVEnc",
         .Filename = "NVEncC64.exe",
+        .DirPath = "Encoders\NVEnc",
         .WebURL = "http://github.com/rigaya/NVEnc",
         .Description = "NVIDIA hardware video encoder.",
         .HelpFile = "help.txt"})
@@ -337,6 +345,7 @@ Public Class Package
     Shared Property QSVEnc As Package = Add(New Package With {
         .Name = "QSVEnc",
         .Filename = "QSVEncC64.exe",
+        .DirPath = "Encoders\QSVEnc",
         .Description = "Intel hardware video encoder.",
         .HelpFile = "help.txt",
         .WebURL = "http://github.com/rigaya/QSVEnc"})
@@ -344,6 +353,7 @@ Public Class Package
     Shared Property VCEEnc As Package = Add(New Package With {
         .Name = "VCEEnc",
         .Filename = "VCEEncC64.exe",
+        .DirPath = "Encoders\VCEEnc",
         .Description = "AMD hardware video encoder.",
         .HelpFile = "help.txt",
         .WebURL = "http://github.com/rigaya/VCEEnc"})
@@ -353,23 +363,24 @@ Public Class Package
         .Filename = "DGDecodeNV.dll",
         .WebURL = "http://rationalqm.us/dgdecnv/dgdecnv.html",
         .Description = Strings.DGDecNV,
-        .DirPath = "DGIndexNV",
+        .DirPath = "Support\DGIndexNV",
         .HelpFile = "DGDecodeNVManual.html",
-        .IsRequiredFunc = Function() p.Script.Filters(0).Script.Contains("DGSource("),
         .HintDirFunc = Function() DGIndexNV.GetStoredPath.Dir,
+        .IsRequiredFunc = Function() p.Script.Filters(0).Script.StartsWith("DGSource("),
         .AvsFilterNames = {"DGSource"},
+        .VSFilterNames = {"DGSource"},
         .AvsFiltersFunc = Function() {New VideoFilter("Source", "DGSource", "DGSource(""%source_file%"")")},
-        .VSFiltersFunc = Function() {New VideoFilter("Source", "DGSource", "clip = core.avs.DGSource(r""%source_file%"")")}})
+        .VSFiltersFunc = Function() {New VideoFilter("Source", "DGSource", "clip = core.dgdecodenv.DGSource(r""%source_file%"")")}})
 
     Shared Property DGDecodeIM As Package = Add(New PluginPackage With {
         .Name = "DGDecodeIM",
         .Filename = "DGDecodeIM.dll",
         .WebURL = "http://rationalqm.us/mine.html",
         .Description = Strings.DGDecIM,
-        .DirPath = "DGIndexIM",
+        .DirPath = "Support\DGIndexIM",
         .HelpFile = "Notes.txt",
         .HintDirFunc = Function() DGIndexIM.GetStoredPath.Dir,
-        .IsRequiredFunc = Function() p.Script.Filters(0).Script.Contains("DGSourceIM("),
+        .IsRequiredFunc = Function() p.Script.Filters(0).Script.StartsWith("DGSourceIM("),
         .AvsFilterNames = {"DGSourceIM"},
         .AvsFiltersFunc = Function() {New VideoFilter("Source", "DGSourceIM", "DGSourceIM(""%source_file%"")")}})
 
@@ -443,15 +454,20 @@ Public Class Package
 
         Add(New Package With {
             .Name = "FFTW",
+            .DirPath = "support\FFTW",
             .Filename = "libfftw3-3.dll",
             .Description = "Library required by the FFT3DFilter AviSynth plugin.",
             .URL = "http://www.fftw.org/",
             .FixedDir = Folder.System,
-            .IsRequiredFunc = Function() Package.AviSynth.IsRequired,
+            .IsRequiredFunc = Function()
+                                  For Each i In p.Script.Filters
+                                      If i.Script.Contains("fft") OrElse i.Script.Contains("FFT") Then Return True
+                                  Next
+                              End Function,
             .SetupAction = Sub()
                                Using pr As New Process
                                    pr.StartInfo.FileName = "xcopy.exe"
-                                   pr.StartInfo.Arguments = $"""{Folder.Apps + "FFTW\"}*ff*"" ""{Folder.System}"" /Y"
+                                   pr.StartInfo.Arguments = $"""{Folder.Apps + "\support\FFTW\"}*ff*"" ""{Folder.System}"" /Y"
                                    pr.StartInfo.Verb = "runas"
                                    pr.Start()
                                    pr.WaitForExit()
@@ -461,6 +477,7 @@ Public Class Package
 
         Add(New Package With {
             .Name = "AVSMeter",
+            .DirPath = "support\AVSMeter",
             .Filename = "AVSMeter64.exe",
             .Description = "AVSMeter runs an Avisynth script with virtually no overhead, displays clip info, CPU and memory usage and the minimum, maximum and average frames processed per second. It measures how fast Avisynth can serve frames to a client application like x264 and comes in handy when testing filters/plugins to evaluate their performance and memory requirements.",
             .StartActionValue = Sub()
@@ -529,13 +546,6 @@ Public Class Package
             .AvsFilterNames = {"VSImport", "VSEval"}})
 
         Add(New PluginPackage With {
-            .Name = "RawSource",
-            .Filename = "RawSourcePlus_x64.dll",
-            .Description = "Loads raw video data directly from files, RawSourcePlus opens a video file which contains 8bit, 9bit, 10bit, 16bit or float ",
-            .WebURL = "http://avisynth.nl/index.php/VapourSource",
-            .AvsFilterNames = {"RawSource"}})
-
-        Add(New PluginPackage With {
             .Name = "TNLMeans",
             .Filename = "TNLMeans.dll",
             .WebURL = "http://avisynth.nl/index.php/TNLMeans",
@@ -574,7 +584,7 @@ Public Class Package
             .Filename = "DePan.dll",
             .DirPath = "Plugins\AVS\MVTools2",
              .HelpFile = "Readme_depans.txt",
-            .WebURL = "http://avisynth.nl/index.php/Depan",
+            .WebURL = "http://avisynth.nl/index.php/DePan",
             .AvsFilterNames = {"DePan", "DePanInterleave", "DePanStabilize", "DePanScenes"}})
 
         Add(New PluginPackage With {
@@ -582,31 +592,31 @@ Public Class Package
             .DirPath = "Plugins\AVS\MVTools2",
             .Filename = "DePanEstimate.dll",
              .HelpFile = "Readme_depans.txt",
-            .WebURL = "http://avisynth.nl/index.php/Depan",
+            .WebURL = "http://avisynth.nl/index.php/DePan",
             .AvsFilterNames = {"DePanEstimate"}})
-
-        Add(New PluginPackage With {
-            .Name = "Shader AVSI",
-            .DirPath = "Plugins\AVS\Shader",
-            .Filename = "Shader.avsi",
-             .HelpFile = "Readme.txt",
-            .WebURL = "http://avisynth.nl/index.php/Shader",
-            .AvsFilterNames = {"SuperRes", "SuperResXBR", "SuperXBR", "ResizeShader", "SuperResPass", "SuperXbrMulti", "ResizeShader"}})
 
         Add(New PluginPackage With {
             .Name = "Shader DLL",
             .DirPath = "Plugins\AVS\Shader",
             .Filename = "Shader.dll",
              .HelpFile = "Readme.txt",
-            .WebURL = "http://avisynth.nl/index.php/Shader",
-            .AvsFilterNames = {"Shader", "ShaderExecute", "ConvertToShader", "ConvertFromShader"}})
+            .WebURL = "https://github.com/mysteryx93/AviSynthShader/releases",
+            .AvsFilterNames = {"SuperRes", "SuperResXBR", "SuperXBR", "ResizeShader", "SuperResPass", "SuperXbrMulti", "ResizeShader"}})
+
+        Add(New PluginPackage With {
+            .Name = "Shader AVSI",
+            .DirPath = "Plugins\AVS\Shader",
+            .Filename = "Shader.avsi",
+             .HelpFile = "Readme.txt",
+            .WebURL = "https://github.com/mysteryx93/AviSynthShader/releases",
+            .AvsFilterNames = {"SuperRes", "SuperResXBR", "SuperXBR", "ResizeShader", "SuperResPass", "SuperXbrMulti", "ResizeShader"}})
 
         Add(New PluginPackage With {
             .Name = "JincResize",
             .Filename = "JincResize.dll",
             .Description = "Jinc (EWA Lanczos) resampling plugin for AviSynth 2.6/AviSynth+.",
             .HelpFile = "Readme.txt",
-            .WebURL = "http://avisynth.nl/index.php/Jinc",
+            .WebURL = "http://avisynth.nl/index.php/JincResize",
             .AvsFilterNames = {"Jinc36Resize", "Jinc64Resize", "Jinc144Resize", "Jinc256Resize"}})
 
         Add(New PluginPackage With {
@@ -700,7 +710,7 @@ Public Class Package
             .Filename = "CNR2.dll",
             .HelpFile = "CNR2.html",
             .Description = "A fast chroma denoiser. Very effective against stationary rainbows and huge analogic chroma activity. Useful to filter VHS/TV caps.",
-            .WebURL = "http://avisynth.nl/index.php/CNR2",
+            .WebURL = "http://avisynth.nl/index.php/Cnr2",
             .AvsFilterNames = {"cnr2"},
             .AvsFiltersFunc = Function() {
                 New VideoFilter("Restoration", "RCR | CNR2", "Cnr2(mode=""oxx"", scdthr=10.0, ln=35, lm=192, un=47, um=255, vn=47, vm=255, log=false, sceneChroma=false)")}})
@@ -806,15 +816,15 @@ Public Class Package
             .AvsFiltersFunc = Function() {
                 New VideoFilter("Noise", "NLMeans | xNLMeans", "xnlmeans(a=4,h=2.2,vcomp=0.5,s=1)")}})
 
-        Add(New PluginPackage With {
-            .Name = "XAA",
-            .Filename = "xaa.avsi",
-            .WebURL = "http://avisynth.nl/index.php/xaa",
-            .Description = "A highly versatile anti-aliasing function.",
-            .HelpFile = "Readme.txt",
-            .AvsFilterNames = {"XAA"},
-            .AvsFiltersFunc = Function() {
-                New VideoFilter("Line", "Anti-Aliasing | XAA", "xaa()")}})
+        'Add(New PluginPackage With { 'Removed Since it can longer run on any newer systems.
+        '    .Name = "XAA",
+        '    .Filename = "xaa.avsi",
+        '    .WebURL = "http://avisynth.nl/index.php/xaa",
+        '    .Description = "A highly versatile anti-aliasing function.",
+        '    .HelpFile = "Readme.txt",
+        '    .AvsFilterNames = {"XAA"},
+        '    .AvsFiltersFunc = Function() {
+        '        New VideoFilter("Line", "Anti-Aliasing | XAA", "xaa()")}})
 
         Add(New PluginPackage With {
             .Name = "FFT3DGPU",
@@ -823,7 +833,7 @@ Public Class Package
             .HelpFile = "Readme.txt",
             .AvsFilterNames = {"FFT3DGPU"},
             .AvsFiltersFunc = Function() {
-                New VideoFilter("Noise", "FFT3DFilter | FFT3DGPU", "FFT3DGPU(sigma=1.5, bt=5, bw=32, bh=32, ow=16, oh=16, sharpen=0.4, NVPerf=$Select:msg:Do you want to use Nvidia Feature;True;False$)")}})
+                New VideoFilter("Noise", "FFT3DFilter | FFT3DGPU", "FFT3DGPU(sigma=1.5, bt=5, bw=32, bh=32, ow=16, oh=16, sharpen=0.4, NVPerf=$select:msg:Enable Nvidia Function;True;False$)")}})
 
         Add(New PluginPackage With {
             .Name = "DehaloAlpha",
@@ -910,10 +920,10 @@ Public Class Package
             .Filename = "dfttest.dll",
             .Description = "2D/3D frequency domain denoiser using Discrete Fourier transform",
             .HelpFile = "Readme.txt",
-            .WebURL = "http://avisynth.nl/index.php/DFTTest",
+            .WebURL = "http://avisynth.nl/index.php/Dfttest",
             .AvsFilterNames = {"dfttest"},
             .AvsFiltersFunc = Function() {
-                New VideoFilter("Noise", "DFTTest", "dfttest($select:msg:Select Strength;Moderate|sigma=16, tbsize=5;Light|sigma=6, tbsize=1;Strong|sigma=64, tbsize=1$,$select:msg:Enable LSB?;True|lsb_in=true, lsb=true;False|lsb_in=false, lsb=false$)")}})
+                New VideoFilter("Noise", "DFTTest", "dfttest($select:msg:Select Strength;Light|sigma=6, tbsize=3;Moderate|sigma=16, tbsize=5;Strong|sigma=64, tbsize=1$,$select:msg:Enable High Bit Depth?;True|lsb_in=true, lsb=true;False|lsb_in=false, lsb=false$)")}})
 
         Add(New PluginPackage With {
             .Name = "MT Expand Multi",
@@ -1023,7 +1033,6 @@ Public Class Package
             .AvsFiltersFunc = Function() {
             New VideoFilter("Noise", "MCTemporalDenoise | MCTemporalDenoise", "MCTemporalDenoise(settings=""medium"")"),
             New VideoFilter("Noise", "MCTemporalDenoise | MCTemporalDenoisePP", "source=last" + BR + "denoised=FFT3Dfilter()" + BR + "MCTemporalDenoisePP(denoised)")}})
-
 
         Add(New PluginPackage With {
             .Name = "L-SMASH-Works",
@@ -1199,6 +1208,16 @@ Public Class Package
             .VSFilterNames = {"dctf.DCTFilter"}})
 
         Add(New PluginPackage With {
+            .Name = "FixTelecinedFades",
+            .Filename = "libftf_em64t_avx_fma.dll",
+            .DirPath = "Plugins\VS\FixTelecinedFades",
+            .Description = "InsaneAA Anti-Aliasing Script.",
+            .URL = "https://github.com/IFeelBloated/Fix-Telecined-Fades",
+            .VSFilterNames = {"ftf.FixFades"},
+            .VSFiltersFunc = Function() {
+                New VideoFilter("Restoration", "RCR | Fix Telecined Fades", "clip = core.fmtc.bitdepth (clip, bits=32)" + BR + "clip = core.ftf.FixFades(clip)" + BR + "clip = core.fmtc.bitdepth (clip, bits=8)")}})
+
+        Add(New PluginPackage With {
             .Name = "vcmod",
             .Filename = "vcmod.dll",
             .HelpFile = "vcmod.html",
@@ -1292,15 +1311,32 @@ Public Class Package
                 New VideoFilter("Line", "Sharpen | McDegrainSharp", "clip = mcdegrainsharp.mcdegrainsharp(clip, plane=4)")}})
 
         Add(New PluginPackage With {
-            .Name = "hnwvsfunc",
-            .Filename = "hnwvsfunc.py",
+            .Name = "G41Fun",
+            .Filename = "G41Fun.py",
             .DirPath = "Plugins\VS\Scripts",
             .WebURL = "https://github.com/Helenerineium/hnwvsfunc",
-            .Description = "MVTools is a set of filters for motion estimation and compensation.",
-            .VSFilterNames = {"hnwvsfunc.mClean", "hnwvsfunc.NonlinUSM", "hnwvsfunc.DetailSharpen", "hnwvsfunc.LUSM", "hnwvsfunc.JohnFPS", "hnwvsfunc.blah",
-                "hnwvsfunc.ReCon", "hnwvsfunc.MCDegrainSharp", "hnwvsfunc.FineSharp", "hnwvsfunc.psharpen", "hnwvsfunc.QTGMC", "hnwvsfunc.SMDegrain",
-                "hnwvsfunc.STPressoHD", "hnwvsfunc.MLDegrain", "hnwvsfunc.Hysteria", "hnwvsfunc.SuperToon", "hnwvsfunc.EdgeDetect", "hnwvsfunc.SpotLess",
-                "hnwvsfunc.HQDeringmod", "hnwvsfunc.MedSharp", "hnwvsfunc.MedSharp2", "hnwvsfunc.LSFmod", "hnwvsfunc.SeeSaw"}})
+            .Description = "The replaced script for hnwvsfunc with re-written functions.",
+            .VSFilterNames = {"G41Fun.mClean", "G41Fun.NonlinUSM", "G41Fun.DetailSharpen", "G41Fun.LUSM", "G41Fun.JohnFPS", "G41Fun.TemporalDegrain2",
+                "G41Fun.MCDegrainSharp", "G41Fun.FineSharp", "G41Fun.psharpen", "G41Fun.QTGMC", "G41Fun.SMDegrain", "G41Fun.daamod",
+                "G41Fun.STPressoHD", "G41Fun.MLDegrain", "G41Fun.Hysteria", "G41Fun.SuperToon", "G41Fun.EdgeDetect", "G41Fun.SpotLess",
+                "G41Fun.HQDeringmod", "G41Fun.LSFmod", "G41Fun.SeeSaw", "G41Fun.MaskedDHA"}})
+
+        Add(New PluginPackage With {
+            .Name = "fvsfunc",
+            .Filename = "fvsfunc.py",
+            .Description = "Small collection of VapourSynth functions",
+            .DirPath = "Plugins\VS\Scripts",
+            .WebURL = "https://github.com/Irrational-Encoding-Wizardry/fvsfunc",
+            .VSFilterNames = {"fvsfunc.GradFun3mod", "fvsfunc.DescaleM", "fvsfunc.Downscale444", "fvsfunc.JIVTC", "fvsfunc.OverlayInter", "fvsfunc.AutoDeblock", "fvsfunc.ReplaceFrames", "fvsfunc.maa", "fvsfunc.TemporalDegrain",
+                                "fvsfunc.DescaleAA", "fvsfunc.InsertSign"}})
+
+        Add(New PluginPackage With {
+            .Name = "nnedi3_rpow2",
+            .Filename = "nnedi3_rpow2.py",
+            .DirPath = "Plugins\VS\Scripts",
+            .WebURL = "https://github.com/Irrational-Encoding-Wizardry/fvsfunc",
+            .Description = "nnedi3_rpow2 ported from Avisynth for VapourSynth",
+            .VSFilterNames = {"nnedi3_rpow2"}})
 
         Add(New PluginPackage With {
             .Name = "mvmulti",
@@ -1393,7 +1429,7 @@ Public Class Package
             .DirPath = "Plugins\VS\Scripts",
             .Description = "Oyster is an experimental implement of the Blocking Matching concept, designed specifically for compression artifacts removal.",
             .URL = "https://github.com/IFeelBloated/Oyster",
-            .VSFilterNames = {"Osyter.Basic", "Oyster.Deringing", "Oyster.Destaircase", "Oyster.Deblocking", "Oyster.Super"}})
+            .VSFilterNames = {"Oyster.Basic", "Oyster.Deringing", "Oyster.Destaircase", "Oyster.Deblocking", "Oyster.Super"}})
 
         Add(New PluginPackage With {
             .Name = "Plum",
@@ -1536,7 +1572,7 @@ Public Class Package
             .Description = "Motion vectors search plugin  is a deeply refactored and modified version of MVTools2 Avisynth plugin",
             .Filename = "svpflow1_vs64.dll",
             .WebURL = "https://www.svp-team.com/wiki/Manual:SVPflow",
-            .VSFilterNames = {"core.svp1.Super", "core.svp1.Analyse"}})
+            .VSFilterNames = {"core.svp1.Super", "core.svp1.Analyse", "core.svp1.Convert"}})
 
         Add(New PluginPackage With {
             .Name = "SVPFlow 2",
@@ -1544,7 +1580,7 @@ Public Class Package
             .Description = "Motion vectors search plugin is a deeply refactored and modified version of MVTools2 Avisynth plugin",
             .Filename = "svpflow2_vs64.dll",
             .WebURL = "https://www.svp-team.com/wiki/Manual:SVPflow",
-            .VSFilterNames = {"core.svp2.SmoothFps", "core.svp2.Convert"}})
+            .VSFilterNames = {"core.svp2.SmoothFps"}})
 
         Add(New PluginPackage With {
             .Name = "Dither",
@@ -1576,10 +1612,10 @@ Public Class Package
             .Name = "DFTTest",
             .Filename = "DFTTest.dll",
             .Description = "VapourSynth port of dfttest.",
-            .WebURL = "https://github.com/Hinterwaeldlers/vapoursynth-hqdn3d",
+            .WebURL = "https://github.com/HomeOfVapourSynthEvolution/VapourSynth-DFTTest",
             .VSFilterNames = {"dfttest.DFTTest"},
             .VSFiltersFunc = Function() {
-                New VideoFilter("Noise", "DFTTest", "$select:msg:Select Strength;Moderate|clip = core.dfttest.DFTTest(clip, sigma=16, tbsize=5);Light|clip = core.dfttest.DFTTest(clip, sigma=6, tbsize=1);Strong|clip = core.dfttest.DFTTest(clip, sigma=64, tbsize=1)$")}})
+                New VideoFilter("Noise", "DFTTest", "$select:msg:Select Strength;Light|clip = core.dfttest.DFTTest(clip, sigma=6, tbsize=3,opt=3);Moderate|clip = core.dfttest.DFTTest(clip, sigma=16, tbsize=5,opt=3);Strong|clip = core.dfttest.DFTTest(clip, sigma=64, tbsize=1,opt=3)$")}})
 
         Add(New PluginPackage With {
             .Name = "VagueDenoiser",
@@ -1610,7 +1646,7 @@ Public Class Package
             .Name = "DegrainMedian",
             .Filename = "libdegrainmedian.dll",
             .Description = "VapourSynth port of DegrainMedian",
-            .WebURL = "https://github.com/HomeOfVapourSynthEvolution/VapourSynth-TTempSmooth",
+            .WebURL = "https://github.com/dubhater/vapoursynth-degrainmedian",
             .VSFilterNames = {"dgm.DegrainMedian"},
             .VSFiltersFunc = Function() {
                 New VideoFilter("Noise", "RemoveGrain | DegrainMedian", "clip = core.dgm.DegrainMedian(clip=clip, interlaced=False)")}})
@@ -1940,7 +1976,7 @@ Public Class AviSynthPlusPackage
         WebURL = "http://avisynth.nl/index.php/AviSynth%2B"
         Description = "StaxRip support both AviSynth+ x64 and VapourSynth x64 as scripting based video processing tool."
         FixedDir = Folder.System
-        SetupFilename = "AviSynthPlus-MT-r2728.exe"
+        SetupFilename = "Installers\AviSynthPlus-MT-r2772.exe"
     End Sub
 
     Public Overrides Property IsRequired As Boolean
@@ -1970,6 +2006,7 @@ Public Class PythonPackage
         WebURL = "http://www.python.org"
         Description = "Python x64 is required by VapourSynth x64. StaxRip x64 supports both AviSynth+ x64 and VapourSynth x64 as scripting based video processing tool."
         DownloadURL = "https://www.python.org/downloads/windows/"
+        SetupFilename = "Installers\python-3.7.2-amd64.exe"
     End Sub
 
     Public Overrides Property IsRequired As Boolean
@@ -2036,7 +2073,7 @@ Public Class PluginPackage
         If p.Script.Engine = ScriptEngine.AviSynth AndAlso
             Not package.AvsFilterNames.NothingOrEmpty Then
 
-            Dim fullScriptLower = p.Script.GetFullScript().ToLowerInvariant
+            Dim fullScriptLower = p.Script.GetScript().ToLowerInvariant
 
             For Each filterName In package.AvsFilterNames
                 If fullScriptLower.Contains(filterName.ToLowerInvariant) Then Return True
@@ -2074,6 +2111,7 @@ Public Class qaacPackage
     Sub New()
         Name = "qaac"
         Filename = "qaac64.exe"
+        DirPath = "Audio\qaac"
         WebURL = "http://github.com/nu774/qaac"
         Description = "qaac is a command line AAC encoder frontend based on the Apple AAC encoder. qaac requires libflac which StaxRip includes and it requires AppleApplicationSupport64.msi which can be extracted from the x64 iTunes installer using a decompression tool like 7-Zip. The makeportable script found on the qaac website can also be used."
     End Sub
@@ -2104,6 +2142,7 @@ Public Class DGIndexNVPackage
 
     Sub New()
         Name = "DGIndexNV"
+        DirPath = "Support\DGIndexNV"
         Filename = "DGIndexNV.exe"
         WebURL = "http://rationalqm.us/dgdecnv/dgdecnv.html"
         Description = Strings.DGDecNV
@@ -2134,6 +2173,7 @@ Public Class DGIndexIMPackage
     Sub New()
         Name = "DGIndexIM"
         Filename = "DGIndexIM.exe"
+        DirPath = "Support\DGIndexIM"
         WebURL = "http://rationalqm.us/mine.html"
         Description = Strings.DGDecIM
         HelpFile = "Notes.txt"
@@ -2164,7 +2204,6 @@ Public Class dsmuxPackage
         Filename = "dsmux.exe"
         Description = Strings.dsmux
         WebURL = "http://haali.su/mkv"
-        SetupFilename = "MatroskaSplitter.exe"
         IsRequired = False
     End Sub
 
@@ -2192,7 +2231,6 @@ Public Class HaaliSplitter
         Name = "Haali Splitter"
         Filename = "splitter.ax"
         WebURL = "http://haali.su/mkv"
-        SetupFilename = "MatroskaSplitter.exe"
         Description = "Haali Splitter is used by eac3to and dsmux to write MKV files. Haali Splitter and LAV Filters overrite each other, most people prefer LAV Filters, therefore it's recommended to install Haali first and LAV Filters last."
         IsRequired = False
     End Sub

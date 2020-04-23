@@ -69,6 +69,12 @@ Public Class QSVEnc
     End Property
 
     Overrides Sub Encode()
+
+        If OutputExt = "hevc" Then
+            Dim codecs = ProcessHelp.GetStdOut(Package.QSVEnc.Path, "--check-features").Right("Codec")
+            If Not codecs?.ToLower.Contains("hevc") Then Throw New ErrorAbortException("QSVEnc Error", "H.265/HEVC isn't supported by your Hardware.")
+        End If
+
         p.Script.Synchronize()
         Params.RaiseValueChanged(Nothing)
 
@@ -295,10 +301,10 @@ Public Class QSVEnc
                         New OptionParam With {.Switch = "--colormatrix", .Text = "Colormatrix", .Options = {"Undefined", "BT 2020 NC", "BT 2020 C", "BT 470 BG", "BT 709", "FCC", "GBR", "SMPTE 170 M", "SMPTE 240 M", "YCgCo"}},
                         New OptionParam With {.Switch = "--colorprim", .Text = "Colorprim", .Options = {"Undefined", "BT 709", "SMPTE 170 M", "BT 470 M", "BT 470 BG", "SMPTE 240 M", "Film", "BT 2020"}},
                         New OptionParam With {.Switch = "--transfer", .Text = "Transfer", .Options = {"Undefined", "BT 709", "SMPTE 170 M", "BT 470 M", "BT 470 BG", "SMPTE 240 M", "Linear", "Log 100", "Log 316", "IEC 61966-2-4", "BT 1361 E", "IEC 61966-2-1", "BT 2020-10", "BT 2020-12", "SMPTE 2084", "SMPTE 428", "ARIB-SRD-B67"}},
-                        MaxCLL, MaxFALL, Chromaloc,                        
-						New BoolParam With {.Switch = "--pic-struct", .Text = "Set the picture structure and emits it in the picture timing SEI message"},
-						New BoolParam With {.Switch = "--fullrange", .Text = "Fullrange"},
-						New BoolParam With {.Switch = "--aud", .Text = "AUD"})
+                        MaxCLL, MaxFALL, Chromaloc,
+                        New BoolParam With {.Switch = "--pic-struct", .Text = "Set the picture structure and emits it in the picture timing SEI message"},
+                        New BoolParam With {.Switch = "--fullrange", .Text = "Fullrange"},
+                        New BoolParam With {.Switch = "--aud", .Text = "AUD"})
                     Add("Deinterlace", Deinterlace, TFF, BFF)
                     Add("Other",
                         New StringParam With {.Text = "Custom", .AlwaysOn = True},
@@ -362,7 +368,9 @@ Public Class QSVEnc
                 End If
             End If
 
-            mctfval.NumEdit.Enabled = mctf.Value
+            If Not QPI.NumEdit Is Nothing Then
+                mctfval.NumEdit.Enabled = mctf.Value
+            End If
 
             MyBase.OnValueChanged(item)
         End Sub

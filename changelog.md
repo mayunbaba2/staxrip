@@ -1,22 +1,77 @@
 #### Requirements
 
-.NET 4.7.2 is required to be installed.
+.NET 4.8 is required, Should be Pre-Installed with the Latest Version of Windows 10.
 
-https://www.microsoft.com/en-us/download/details.aspx?id=55170
+https://dotnet.microsoft.com/download
+
+2.0.0.1
+- Updated to dotnet 4.8.
+- Removed Auto insert for RGB for VS and Convert Bits for AVS. Most are no longer useful due to 10Bit+ Videos are more common now.
+- This is a pure Refresh Release, Mainily designed to update some of the encoding tools.
+- This Release contains all the Changes from the Pipeline along with the Following.
+- Updated Temp Folder Creation and Long Path Checker (Long Path Checker is only used on any OS below Window 10)
+- Updated Comparison Tool It shouldn't need to index file when ffms2 is used.
+- Updated Both Contact Sheet Creator and Video Comparison tool to use LWLibavVideoSource over the Standard L-Smash.
+- Updated Visual Studio to 2019 RC, Anything Compiled will be using RC Build of VS 2019.
+- VS: The default Resizer Code is slightly Different Compared to Base VS Resizer Code in the Context Menu.
+- VS: SVPFlow Altered to Target CurrentFramte & Num / Den to achieve the Final Framerate instead of rounding. Type quality has also been Changed, aswell linear light support has been added (GPU Only).
+- x265: AQmode Tweaked for the new Defaults.
+- XAA Remove from AVS (Temp), due to certain Functions being alter in AVS+ core.
+- VS: Updated DGIndexNV Load Function It now loads using it's native method instead of AVS load function.
+- VS: G41Fun replaces hnwvsfunc
+- VS: hnwvsfunc Script removed
+- VS: fvsfunc functions updated
+- VS: Auto-Deblock Added to Context Menu
+- VS: nnedi3_rpow2 added to Script folder for Support.
+- VS: Added FixTelecinedFades to Context Menu for RCR.
+- Rebuilt QVSEnc Encoder Script
+- x265 Has been updated to 3.0-AU With any Additional Chnages.
+- Added Merge: XviD Encoding code has been Updated (Credit: jkilez)
+- Added Merge: Chapter Cutting Feature to MkvMuxer (Credit: wybb)
 
 2.0
-- Fixed QSVEnc Key, Which was locking some users out.
-- Updated the Switches for VCEnc
-- Some Prep For Dotnet 4.8(Not Yet Enabled Until Next Windows 10 Update)
-- Updated the MTModes
-- Updated AVS Syntax for SVPFlow
-- Updated some of the Changed defaults for x265.
-- Updated FFMpeg, MKVNix, NVENCc, Rav1e,x265 & MediaInfo
-- Support Now Includes MiniCoda For supported Python
+- Brand New Update System All done within the App
+- New Tab Added to x265 for Bitstream due to all the new Flags.
+- Updated the default state of the x265 flags that were changed.
+- x265 Flags Added:
+	- Zone File
+	- HRD Concat(The Flag is currently improperly marked in x265 cli)
+	- Dolby Vision RPU
+	- Dolby Vision Profiles
+	- Tuning: Animation
+	- Refine CTU Distortion	
+	- hevc-aq
+	- qp-adaptation-range
+	- refine-mv-type renamed to refine-analysis-type	
+- rav1e Flags Added:
+	- Matrix
+	- transfer
+	- primaries
+	- Min Key Int
+- Added Support additional support for LongPaths 
+	- There are two ways the app can name the files & Folders based on your OS & Harddrive Type
+	- If One Method fails it now has a fallback method to use.
+- Fixed QSVEnc key, Which was locking some users out.
+- Updated the VapourSynth scripts that have been updated recently.
+- Updated the filter names for Vapoursynth and removed the ones that don't exist anymore.
+- Updated the switches for VCEnc
+- Updated the MTModes Syntax for AVSynth
+- Updated DFTTest syntax for Vapoursynth, Opt Settings is now set to AVX2(Settings it below 3 will set it to AVX or None).
+- Added additional source filter when StaxRip internal thumbnail is used, some source files did not get along with ffms.
+- Updated VapourSynth and Tweaked SVPFlow & Added Additional Option to use BlockFPS.
+- Updated FFmpeg, MKVToolNix, NVENC, Rav1e, x265 & MediaInfo
+- Python Support now includes Miniconda as well, Python 3.7.2 can be used as well.
 - Included Both Old and Newer versions of MediaInfo Just incase it breaks something again.
-- Updated All the Output Path Options for MTN, StaxRip Thumbnailer, Gif & PNG Creator.
+- Re-Enabled MediaInfo Folder Function, Since The Bug in MediaInfo has been fixed.
+- Added & Updated All the Output Path Options for MTN, StaxRip Thumbnailer, Gif & PNG Creators.
 - The Help System for the Encoders Has been Altered. All the Help System works the Same now.
-- Plus all the Changes From PRevious Two Beta Release(See Below)
+- Updated the dll files for both Avisynth & VapourSynth for filters that have been updated.
+- Support for PNG has been added for VFW Saving Screenshot(Default Options are PNG & BMP, With JPG being able to be added in the Edit Menu).
+- Cleaned up and Organized for File Structure inside App Folder.
+- a small tweak in regards to the VFW.
+- Updated mpvnet
+- Plus some other changes as well.
+- Plus all the Changes From Previous Two Beta Release(See Below)
 
 2.0 Beta 2
 - Updated a few of FFMpeg Flags for Audio Demuxing / Encoding.

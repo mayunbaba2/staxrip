@@ -527,6 +527,10 @@ File path to ffmpeg
 
 File path to ffms2
 
+``%app:ffms2%``
+
+File path to ffms2
+
 ``%app:FFT3DFilter%``
 
 File path to FFT3DFilter
@@ -555,6 +559,10 @@ File path to FineSharp
 
 File path to finesharp
 
+``%app:FixTelecinedFades%``
+
+File path to FixTelecinedFades
+
 ``%app:flash3kyuu_deband%``
 
 File path to flash3kyuu_deband
@@ -579,6 +587,14 @@ File path to FrameRateConverter AVSI
 
 File path to FrameRateConverter DLL
 
+``%app:fvsfunc%``
+
+File path to fvsfunc
+
+``%app:G41Fun%``
+
+File path to G41Fun
+
 ``%app:GradFun2DB%``
 
 File path to GradFun2DB
@@ -594,10 +610,6 @@ File path to Haali Splitter
 ``%app:havsfunc%``
 
 File path to havsfunc
-
-``%app:hnwvsfunc%``
-
-File path to hnwvsfunc
 
 ``%app:HQDeringmod%``
 
@@ -763,6 +775,10 @@ File path to nnedi3 AVSI
 
 File path to nnedi3
 
+``%app:nnedi3_rpow2%``
+
+File path to nnedi3_rpow2
+
 ``%app:nnedi3cl%``
 
 File path to nnedi3cl
@@ -814,10 +830,6 @@ File path to QTGMC
 ``%app:rav1e%``
 
 File path to rav1e
-
-``%app:RawSource%``
-
-File path to RawSource
 
 ``%app:resamplehq%``
 
@@ -939,10 +951,6 @@ File path to TTempSmooth
 
 File path to UnDot
 
-``%app:Update%``
-
-File path to Update
-
 ``%app:VagueDenoiser%``
 
 File path to VagueDenoiser
@@ -1026,10 +1034,6 @@ File path to x264
 ``%app:x265%``
 
 File path to x265
-
-``%app:XAA%``
-
-File path to XAA
 
 ``%app:xNLMeans%``
 
@@ -1291,6 +1295,10 @@ Folder path to ffmpeg
 
 Folder path to ffms2
 
+``%app_dir:ffms2%``
+
+Folder path to ffms2
+
 ``%app_dir:FFT3DFilter%``
 
 Folder path to FFT3DFilter
@@ -1319,6 +1327,10 @@ Folder path to FineSharp
 
 Folder path to finesharp
 
+``%app_dir:FixTelecinedFades%``
+
+Folder path to FixTelecinedFades
+
 ``%app_dir:flash3kyuu_deband%``
 
 Folder path to flash3kyuu_deband
@@ -1343,6 +1355,14 @@ Folder path to FrameRateConverter AVSI
 
 Folder path to FrameRateConverter DLL
 
+``%app_dir:fvsfunc%``
+
+Folder path to fvsfunc
+
+``%app_dir:G41Fun%``
+
+Folder path to G41Fun
+
 ``%app_dir:GradFun2DB%``
 
 Folder path to GradFun2DB
@@ -1358,10 +1378,6 @@ Folder path to Haali Splitter
 ``%app_dir:havsfunc%``
 
 Folder path to havsfunc
-
-``%app_dir:hnwvsfunc%``
-
-Folder path to hnwvsfunc
 
 ``%app_dir:HQDeringmod%``
 
@@ -1527,6 +1543,10 @@ Folder path to nnedi3 AVSI
 
 Folder path to nnedi3
 
+``%app_dir:nnedi3_rpow2%``
+
+Folder path to nnedi3_rpow2
+
 ``%app_dir:nnedi3cl%``
 
 Folder path to nnedi3cl
@@ -1578,10 +1598,6 @@ Folder path to QTGMC
 ``%app_dir:rav1e%``
 
 Folder path to rav1e
-
-``%app_dir:RawSource%``
-
-Folder path to RawSource
 
 ``%app_dir:resamplehq%``
 
@@ -1703,10 +1719,6 @@ Folder path to TTempSmooth
 
 Folder path to UnDot
 
-``%app_dir:Update%``
-
-Folder path to Update
-
 ``%app_dir:VagueDenoiser%``
 
 Folder path to VagueDenoiser
@@ -1790,10 +1802,6 @@ Folder path to x264
 ``%app_dir:x265%``
 
 Folder path to x265
-
-``%app_dir:XAA%``
-
-Folder path to XAA
 
 ``%app_dir:xNLMeans%``
 

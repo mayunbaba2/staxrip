@@ -276,10 +276,10 @@ Public Class GlobalCommands
 
     <Command("Test")>
     Sub Test()
-        If Not File.Exists(Folder.Startup.Parent + "Encoding\nvenc.vb") Then
-            MsgError("This feature is development related.")
-            Exit Sub
-        End If
+        'If Not File.Exists(Folder.Startup.Parent + "Encoding\nvenc.vb") Then
+        '    MsgError("This feature is development related.")
+        '    Exit Sub
+        'End If
 
         Dim msg = ""
 
@@ -296,7 +296,7 @@ Public Class GlobalCommands
             --avsync --mux-option --input-res --fps --dar --audio-ignore-decode-error --audio-ignore-notrack-error
             --log --log-framelist".Split((" " + BR).ToCharArray())
 
-        File.WriteAllText(Package.NVEnc.GetDir + "help.txt", ProcessHelp.GetStdOut(Package.NVEnc.Path, "-h"))
+        File.WriteAllText(Package.NVEnc.GetDir + "\help.txt", ProcessHelp.GetStdOut(Package.NVEnc.Path, "-h"))
         Dim nvHelp = File.ReadAllText(Package.NVEnc.GetDir + "help.txt").Replace("(no-)", "").Replace("--no-", "--")
         Dim nvHelpSwitches = Regex.Matches(nvHelp, "--[\w-]+").OfType(Of Match)().Select(Function(x) x.Value)
         Dim nvCode = File.ReadAllText(Folder.Startup.Parent + "Encoding\nvenc.vb").Replace("--no-", "--")
@@ -318,7 +318,7 @@ Public Class GlobalCommands
             --input-res --log-framelist --mux-option --output-file --raw --seek --skip-frame
             --sub-copy --version --video-streamid --video-track --vpy --vpy-mt".Split((" " + BR).ToCharArray())
 
-        Dim amdHelp = File.ReadAllText(".\Apps\VCEEnc\help.txt").Replace("(no-)", "").Replace("--no-", "--")
+        Dim amdHelp = File.ReadAllText(".\Apps\Encoders\VCEEnc\help.txt").Replace("(no-)", "").Replace("--no-", "--")
         Dim amdHelpSwitches = Regex.Matches(amdHelp, "--[\w-]+").OfType(Of Match)().Select(Function(x) x.Value)
         Dim amdCode = File.ReadAllText(Folder.Startup.Parent + "Encoding\vceenc.vb").Replace("--no-", "--")
         Dim amdPresent = Regex.Matches(amdCode, "--[\w-]+").OfType(Of Match)().Select(Function(x) x.Value)
@@ -330,7 +330,7 @@ Public Class GlobalCommands
         If amdMissing.Count > 0 Then msg += BR2 + "# Removed from VCEEnc" + BR2 + amdMissing.Join(" ")
         If amdUnknown.Count > 0 Then msg += BR2 + "# VCEEnc Todo" + BR2 + amdUnknown.Join(" ")
 
-        Dim qsExcept = "--help --version --check-device --video-streamid --video-track
+        Dim qsExcept = "--help --version --check-lib --check-device --video-streamid --video-track
             --check-avversion --check-codecs --check-encoders --check-decoders --check-formats
             --check-protocols --chapter-no-trim --check-filters --device --input --output
             --raw --avs --vpy --vpy-mt --audio-source --audio-file --seek --format --caption2ass
@@ -364,7 +364,7 @@ Public Class GlobalCommands
             --no-progress --pbration --fullhelp".Split((" " + BR).ToCharArray())
 
         Dim x265RemoveExcept = "--numa-pools --rdoq --cip --qblur --cplxblur --cu-stats --dhdr10-info --display-window 
-            --opt-qp-pps --opt-ref-list-length-pps --single-sei
+            --opt-qp-pps --opt-ref-list-length-pps --single-sei --hrd-concat
             --dhdr10-opt --crop --pb-factor --ip-factor --level --log".Split((" " + BR).ToCharArray())
 
         Dim x265Help = ProcessHelp.GetStdOut(Package.x265.Path, "--log-level full --fullhelp").Replace("--[no-]", "--")
@@ -403,7 +403,7 @@ Public Class GlobalCommands
         'If aomMissing.Count > 0 Then msg += BR2 + "# Removed from aomenc" + BR2 + aomMissing.Join(" ")
         'If aomUnknown.Count > 0 Then msg += BR2 + "# aomenc Todo" + BR2 + aomUnknown.Join(" ")
 
-        Dim RavExcept = "--output --help --version --verbose".Split((" " + BR).ToCharArray())
+        Dim RavExcept = "--output --help --psnr --version --verbose".Split((" " + BR).ToCharArray())
         Dim RavCodeExcept = "--y4m --help --version --verbose".Split((" " + BR).ToCharArray())
         Dim RavHelp = ProcessHelp.GetStdOut(Package.Rav1e.Path, "--help")
         File.WriteAllText(Package.Rav1e.GetDir + "help.txt", RavHelp)
@@ -479,10 +479,10 @@ Public Class GlobalCommands
             End If
         Next
 
-        supportedTools.WriteUTF8File("C:\Users\Revan\Desktop\StaxRip\docs\tools.rst")
+        supportedTools.WriteUTF8File("C:\Users\Revan\Desktop\staxrip-master\docs\tools.rst")
 
         Dim screenshots = "Screenshots" + BR + "===========" + BR2 + ".. contents::" + BR2
-        Dim screenshotFiles = Directory.GetFiles("C:\Users\Revan\Desktop\StaxRip\docs\screenshots").ToList
+        Dim screenshotFiles = Directory.GetFiles("C:\Users\Revan\Desktop\staxrip-master\docs\screenshots").ToList
         screenshotFiles.Sort(New StringLogicalComparer)
 
         For Each i In screenshotFiles
@@ -490,7 +490,7 @@ Public Class GlobalCommands
             screenshots += name + BR + "-".Multiply(name.Length) + BR2 + ".. image:: screenshots/" + i.FileName + BR2
         Next
 
-        screenshots.WriteUTF8File("C:\Users\Revan\Desktop\StaxRip\docs\screenshots.rst")
+        screenshots.WriteUTF8File("C:\Users\Revan\Desktop\staxrip-master\docs\screenshots.rst")
 
         Dim macros = "Macros" + BR + "======" + BR2
 
@@ -498,7 +498,7 @@ Public Class GlobalCommands
             macros += "``" + i.Name + "``" + BR2 + i.Value + BR2
         Next
 
-        macros.WriteUTF8File("C:\Users\Revan\Desktop\StaxRip\docs\macros.rst")
+        macros.WriteUTF8File("C:\Users\Revan\Desktop\staxrip-master\docs\macros.rst")
 
         Dim powershell = "PowerShell Scripting
 ====================
@@ -535,18 +535,18 @@ Default Scripts
 ---------------
 
 "
-        Dim psdir = "C:\Users\Revan\Desktop\StaxRip\docs\powershell"
+        Dim psdir = "C:\Users\Revan\Desktop\staxrip-master\docs\powershell"
         DirectoryHelp.Delete(psdir)
         Directory.CreateDirectory(psdir)
 
-        For Each i In Directory.GetFiles("C:\Users\Revan\Desktop\StaxRip\bin\Apps\Scripts")
+        For Each i In Directory.GetFiles("C:\Users\Revan\Desktop\staxrip-master\bin\Apps\Scripts")
             FileHelp.Copy(i, psdir + i.FileName)
             Dim filename = i.FileName
             powershell += filename + BR + "~".Multiply(filename.Length) + BR2
             powershell += ".. literalinclude:: " + "powershell/" + i.FileName + BR + "   :language: powershell" + BR2
         Next
 
-        powershell.WriteUTF8File("C:\Users\Revan\Desktop\StaxRip\docs\powershell.rst")
+        powershell.WriteUTF8File("C:\Users\Revan\Desktop\staxrip-master\docs\powershell.rst")
 
         Dim switches = "Command Line Interface
 ======================
@@ -615,7 +615,7 @@ Switches
             switches += command.Attribute.Description + BR2 + BR
         Next
 
-        switches.WriteUTF8File("C:\Users\Revan\Desktop\StaxRip\docs\cli.rst")
+        switches.WriteUTF8File("C:\Users\Revan\Desktop\staxrip-master\docs\cli.rst")
 
         If msg <> "" Then
             Dim fs = Folder.Temp + "staxrip todo.txt"
